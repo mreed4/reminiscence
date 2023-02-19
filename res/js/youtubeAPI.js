@@ -1,4 +1,4 @@
-import { youtubeParser } from "./helpers.js";
+import { youtubeParser, getRelativeTime } from "./helpers.js";
 import { config } from "./config.js";
 
 const key = config.key;
@@ -10,8 +10,7 @@ const h1 = document.querySelector("h1");
 const apiBase = "https://www.googleapis.com/youtube/v3";
 
 let videoId;
-const hideLongComments = true;
-const commentAmount = 25;
+const commentAmount = 100;
 
 inputURL.addEventListener(
   "change",
@@ -46,14 +45,23 @@ function getComments() {
       .then((dat) => {
         if (dat) {
           console.log(dat);
-          dat.items.map((item) => {
-            const comment = item.snippet.topLevelComment.snippet.textDisplay;
-            const replies = item.snippet.totalReplyCount;
+          dat.items
+            .sort((a, b) => {
+              return b.snippet.topLevelComment.snippet.likeCount - a.snippet.topLevelComment.snippet.likeCount;
+            })
+            .map((item) => {
+              const comment = item.snippet.topLevelComment.snippet;
+              const likes = comment.likeCount;
+              const text = comment.textDisplay;
+              const date = Date.parse(comment.publishedAt) / 1000;
 
-            if (hideLongComments && !comment.includes("<br>")) {
-              ol.insertAdjacentHTML("beforeend", `<li>${replies} ${comment}</li>`);
-            }
-          });
+              const li = `<li>${text} ${getRelativeTime(date)} (${likes})</li>`;
+
+              // console.log(comment.length);
+              if (!text.includes("<br>")) {
+                ol.insertAdjacentHTML("beforeend", li);
+              }
+            });
         }
       });
   }
