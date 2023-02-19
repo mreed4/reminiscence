@@ -1,5 +1,42 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: gainsboro;
+}
+
 ol {
-  /* list-style-type: none; */
-  /* margin: 0; */
-  /* padding: 0; */
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  max-width: 600px;
+}
+
+li {
+  padding: 0.5em;
+  margin: 0.5em 0;
+  background-color: whitesmoke;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.comment-data {
+  display: flex;
+  justify-content: flex-start;
+  padding: 0.5em 0;
+  font-size: 75%;
+  color: hsla(0, 100%, 0%, 0.7);
+}
+
+.comment-data > span::after {
+  content: "•";
+  padding: 0 0.5em;
+}
+
+.comment-data > span:last-child::after {
+  content: "";
 }
