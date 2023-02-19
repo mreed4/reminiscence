@@ -1,6 +1,7 @@
 import { youtubeParser } from "./helpers.js";
+import { config } from "./config.js";
 
-const key = YT_API;
+const key = config.key;
 
 const inputURL = document.querySelector("#video-url");
 const ol = document.querySelector("ol");
