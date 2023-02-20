@@ -12,7 +12,7 @@ const pCount = document.querySelector("p span");
 
 const youtubeOrder = "relevance"; // relevance, time, orderUnspecified
 const sortMethod = "comment-length"; // likes, date, replies, comment-length
-const dateSort = "oldest"; // newest, oldest
+const dateSort = "newest"; // newest, oldest
 
 const apiBase = "https://www.googleapis.com/youtube/v3";
 
@@ -54,16 +54,20 @@ function getComments() {
       .then((res) => res.json())
       .then((dat) => {
         if (dat) {
-          console.log(dat);
+          // console.log(dat);
           dat.items
             .sort((a, b) => {
               if (sortMethod === "likes") {
                 return b.snippet.topLevelComment.snippet.likeCount - a.snippet.topLevelComment.snippet.likeCount;
               } else if (sortMethod === "date") {
                 if (dateSort === "oldest") {
-                  return b.snippet.topLevelComment.snippet.publishedAt - a.snippet.topLevelComment.snippet.publishedAt;
+                  return (
+                    Date.parse(a.snippet.topLevelComment.snippet.publishedAt) - Date.parse(b.snippet.topLevelComment.snippet.publishedAt)
+                  );
                 } else if (dateSort === "newest") {
-                  return a.snippet.topLevelComment.snippet.publishedAt - b.snippet.topLevelComment.snippet.publishedAt;
+                  return (
+                    Date.parse(b.snippet.topLevelComment.snippet.publishedAt) - Date.parse(a.snippet.topLevelComment.snippet.publishedAt)
+                  );
                 } else {
                   return;
                 }
@@ -75,6 +79,7 @@ function getComments() {
                 return b.snippet.topLevelComment.snippet.textDisplay.length - a.snippet.topLevelComment.snippet.textDisplay.length;
               }
             })
+            .filter((item) => !item.snippet.topLevelComment.snippet.textDisplay.includes("<br>"))
             .map((item) => {
               const comment = item.snippet.topLevelComment.snippet;
               const likes = comment.likeCount;
@@ -92,14 +97,11 @@ function getComments() {
                     <span>${getRelativeTime(date)}</span>
                     <span>${likes} Likes</span>
                     <span>${replies} Replies</span>
-                    </div>
+                  </div>
                 </div>
               </li>`;
 
-              // console.log(comment.length);
-              if (!text.includes("<br>")) {
-                ol.insertAdjacentHTML("beforeend", li);
-              }
+              ol.insertAdjacentHTML("beforeend", li);
             });
         }
       });
