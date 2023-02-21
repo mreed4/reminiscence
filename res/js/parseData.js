@@ -11,6 +11,7 @@ export const parseData = {
     const channelUrl = `https://www.youtube.com/channel/${data.items[0].snippet.channelId}`;
     h2.style.visibility = "visible";
     h2.textContent = title.length > 60 ? `${title.slice(0, 60)}...` : title;
+    h2.textContent = title;
   },
   listComments(data) {
     ol.innerHTML = "";
@@ -25,9 +26,9 @@ export const parseData = {
         const author = comment.authorDisplayName;
         const authorUrl = comment.authorChannelUrl;
 
-        const li = `<li class="single-comment">
+        const li = `<li class="single-comment ">
           <div class="comment-wrap">
-            <div class="comment-text">${text}</div>
+            <div class="comment-text ${text.length >= 200 ? "smaller" : ""}">${text.length >= 500 ? text.slice(0, 500) + "..." : text}</div>
             <div class="comment-data">
               <span><a href=${authorUrl}>${author}</a></span>
               <span>${getRelativeTime(date)}</span>
@@ -73,27 +74,3 @@ export const parseData = {
 //     return b.snippet.topLevelComment.snippet.textDisplay.length - a.snippet.topLevelComment.snippet.textDisplay.length;
 //   }
 // })
-
-// ,
-//   getRandomComment: (data) => {
-//     const comments = data.items.filter((item) => !item.snippet.topLevelComment.snippet.textDisplay.includes("<br>"));
-//     const rand = Math.floor(Math.random() * data.items.length);
-//     const comment = comments[rand].snippet.topLevelComment.snippet;
-//     const likes = comment.likeCount;
-//     const text = comment.textDisplay;
-//     const date = Date.parse(comment.publishedAt) / 1000;
-//     const replies = comments[rand].snippet.totalReplyCount;
-//     const author = comment.authorDisplayName;
-//     const authorUrl = comment.authorChannelUrl;
-
-//     const div = `<div class="comment-wrap">
-//     <div class="comment-text">${text}</div>
-//     <div class="comment-data">
-//       <span><a href=${authorUrl}>${author}</a></span>
-//       <span>${getRelativeTime(date)}</span>
-//       <span>${likes} Likes</span>
-//       <span>${replies} Replies</span>
-//     </div>`;
-
-//     singleComment.innerHTML = div;
-//   },
