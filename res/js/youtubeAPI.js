@@ -11,7 +11,7 @@ function getVideoTitle(videoId) {
       .then((response) => response.json())
       .then((data) => {
         if (data) {
-          parseData.getVideoTitle(data);
+          parseData.showVideoTitle(data);
         }
       })
       .catch((e) => console.log(e));
@@ -27,6 +27,7 @@ function getComments(videoId, commentAmount = 20) {
       .then((response) => response.json())
       .then((data) => {
         if (data) {
+          console.log(data.items.length);
           parseData.listComments(data);
         }
       })

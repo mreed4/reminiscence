@@ -7,24 +7,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
     <link rel="stylesheet" href="./res/css/styles.css" />
+    <script src="https://kit.fontawesome.com/c41c81dd84.js" crossorigin="anonymous"></script>
 
     <script src="./res/js/index.js" type="module"></script>
   </head>
 
   <body>
-    <div>
-      <h1>Get top <span>0</span> comments for any Youtube video</h1>
-      <p>
+    <header>
+      <h1>Reminiscence</h1>
+      <h2>Video title</h2>
+      <p style="display: none">
         This tool is most impactful when paired with videos for old songs/albums. People tend to either tell a story about why the
         song/album is so meaningful to them, or they provide some unique insight into the production of the song/album. Filtered out are
         comments that are merely the lyrics to the song/album. Due to the filtering, this means the total amount of comments displayed below
         may be less than <span>0</span>.
       </p>
       <input type="text" name="video-url" id="video-url" placeholder="Video URL" />
-      <button id="get-comments">Get Comments</button>
-    </div>
+      <button id="get-comments">Get Comments</button> <button id="new-comment"><i class="fa-solid fa-arrows-rotate"></i></button>
+    </header>
     <section id="comments-area">
-      <h2>Video title</h2>
       <ol id="comments-list"></ol>
       <div id="single-comment"></div>
     </section>
