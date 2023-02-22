@@ -7,11 +7,10 @@ const newCommentBtn = document.querySelector("#new-comment");
 export const parseData = {
   showVideoTitle: (data) => {
     const title = data.items[0].snippet.title;
-    const channel = data.items[0].snippet.channelTitle;
-    const channelUrl = `https://www.youtube.com/channel/${data.items[0].snippet.channelId}`;
+    const videoId = data.items[0].id;
+    const videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
     h2.style.visibility = "visible";
-    h2.textContent = title.length > 60 ? `${title.slice(0, 60)}...` : title;
-    h2.textContent = title;
+    h2.innerHTML = `<a href="${videoUrl}">${title.length > 60 ? `${title.slice(0, 60)}...` : title}</a>`;
   },
   listComments(data) {
     ol.innerHTML = "";
@@ -28,7 +27,9 @@ export const parseData = {
 
         const li = `<li class="single-comment ">
           <div class="comment-wrap">
-            <div class="comment-text ${text.length >= 200 ? "smaller" : ""}">${text.length >= 500 ? text.slice(0, 500) + "..." : text}</div>
+            <div class="comment-text ${text.length >= 200 ? "smaller" : text.length <= 5 ? "larger" : ""}">${
+          text.length >= 500 ? text.slice(0, 500) + "..." : text
+        }</div>
             <div class="comment-data">
               <span><a href=${authorUrl}>${author}</a></span>
               <span>${getRelativeTime(date)}</span>

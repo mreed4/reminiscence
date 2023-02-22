@@ -1,8 +1,11 @@
+@import url("https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Roboto+Condensed:wght@300;700&display=swap");
+
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
   font-weight: normal;
+  user-select: none;
 }
 
 body {
@@ -14,22 +17,45 @@ ol {
   max-width: 650px;
 }
 
-li {
-  margin: 2em 0;
-}
-
 a {
   color: inherit;
   text-decoration: none;
 }
+
+h1,
 h2 {
-  visibility: hidden;
+  font-family: "Roboto Condensed", sans-serif;
+  color: #14213d;
 }
 
-header {
+h2 {
+  visibility: hidden;
+  margin: 0.5em;
+  font-weight: 300;
+}
+
+h1 {
+  font-weight: 700;
+  letter-spacing: -1px;
+}
+
+footer {
   position: absolute;
-  top: 0;
+  bottom: 0;
   left: 0;
+  width: 100vw;
+  /* background-color: #14213d; */
+}
+
+footer > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 1em;
+}
+
+#controls * {
+  font-size: 1.25em;
 }
 
 #comments-area {
@@ -42,22 +68,31 @@ header {
 
 .single-comment {
   display: none;
-  width: 100%;
+}
+
+.comment-text,
+.prompt {
+  line-height: 1.25;
+  font-size: 3rem;
+  user-select: text;
+  font-family: "Libre Baskerville", serif;
+  color: #14213d;
 }
 
 .comment-text {
-  line-height: 1.25;
-  font-size: 3rem;
-  /* text-align: justify; */
+  text-transform: lowercase;
 }
 
 .comment-text.smaller {
-  /* color: red; */
   font-size: 2.25em;
 }
 
+.comment-text.larger {
+  font-size: 5.25em;
+}
+
 .comment-text::selection {
-  background-color: hsla(0, 100%, 0%, 0.2);
+  background-color: gold;
 }
 
 .comment-data {
@@ -67,10 +102,6 @@ header {
   color: hsla(0, 100%, 0%, 0.4);
   font-family: sans-serif;
   font-size: 1.15em;
-}
-
-.comment-data span {
-  user-select: none;
 }
 
 .comment-data span a {
@@ -95,4 +126,23 @@ header {
 
 .comment-data > span:last-child::after {
   content: "";
+}
+
+input[type="text"] {
+  border: 0;
+  padding: 9px;
+  width: 280px;
+  background-color: hsla(0, 100%, 100%, 0.3);
+  border-radius: 9px;
+}
+
+button {
+  border: 0;
+  background-color: transparent;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+
+button:active {
+  transform: scale(1.1);
 }
