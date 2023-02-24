@@ -33,8 +33,8 @@ export const parseData = {
             <div class="comment-data">
               <span><a href=${authorUrl}>${author}</a></span>
               <span>${getRelativeTime(date)}</span>
-              <span>${likes} Likes</span>
-              <span>${replies} Replies</span>
+              <span class="hide">${likes} Likes</span>
+              <span class="hide">${replies} Replies</span>
             </div>
           </div>
         </li>`;
