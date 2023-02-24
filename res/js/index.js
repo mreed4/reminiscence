@@ -1,6 +1,5 @@
-import { inputURL, getCommentsBtn, getComments, enableGetCommentsBtn, disablePlaceholderText, enablePlaceholderText } from "./inputs.js";
+import { init } from "./eventListeners.js";
 
-inputURL.addEventListener("focusin", disablePlaceholderText);
-inputURL.addEventListener("focusout", enablePlaceholderText);
-inputURL.addEventListener("keyup", enableGetCommentsBtn);
-getCommentsBtn.addEventListener("click", getComments);
+window.onload = (event) => {
+  init();
+};
