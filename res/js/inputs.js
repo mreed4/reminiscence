@@ -21,8 +21,9 @@ function getComments(event) {
     getCommentsBtn.disabled = true;
   }
 }
+
 function enableGetCommentsBtn() {
-  if (inputURL.value.length > 0) {
+  if (inputURL.value.length > 0 && (inputURL.value.includes("youtube") || inputURL.value.includes("youtu.be"))) {
     getCommentsBtn.disabled = false;
   }
   if (inputURL.value.length > 0 && !newCommentBtn.disabled) {
