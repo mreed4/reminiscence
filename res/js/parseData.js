@@ -14,7 +14,8 @@ export const parseData = {
   },
   listComments(data) {
     /*
-    listComments will add every comment to a list in the DOM, though by default 
+    listComments() is called in youtubeAPI.js, with the APIs data as the argument. 
+    It will add every comment as a formatted li to an ol in the DOM, though by default 
     each li will be set to "display: none", via a CSS class. 
 
     In this way, we do not have to re-fetch the data from the API every time we want 
