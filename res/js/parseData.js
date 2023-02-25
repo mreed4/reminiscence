@@ -42,12 +42,16 @@ export const parseData = {
         const author = comment.authorDisplayName;
         const authorUrl = comment.authorChannelUrl;
 
+        // This will set the font size of the comment based on its length
+        const dynamicFontSize = text.length >= 200 ? "smaller" : text.length <= 5 ? "larger" : "";
+
+        // This will truncate the comment if it is too long
+        const dynamicComment = text.length >= 500 ? text.slice(0, 500) + "..." : text;
+
         // Create the li to be used in the DOM
         const li = `<li class="single-comment ">
           <div class="comment-wrap">
-            <div class="comment-text ${text.length >= 200 ? "smaller" : text.length <= 5 ? "larger" : ""}">${
-          text.length >= 500 ? text.slice(0, 500) + "..." : text
-        }</div>
+            <div class="comment-text ${dynamicFontSize}">${dynamicComment}</div>
             <div class="comment-data">
               <span><a href=${authorUrl}>${author}</a></span>
               <span>${getRelativeTime(date)}</span>
@@ -61,8 +65,8 @@ export const parseData = {
         ol.insertAdjacentHTML("beforeend", li);
       });
 
-    // This creates a NodeList of all the comments in the DOM
-    // It must be done after the comments are added to the DOM
+    // This creates a NodeList of all the comments added the DOM
+    // This must be done after the comments are added to the DOM
     const allComments = document.querySelectorAll(".single-comment");
 
     // This will show a random comment on page load
