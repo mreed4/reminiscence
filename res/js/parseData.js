@@ -13,10 +13,26 @@ export const parseData = {
     h2.innerHTML = `<a href="${videoUrl}">${title.length > 60 ? `${title.slice(0, 60)}...` : title}</a>`;
   },
   listComments(data) {
-    ol.innerHTML = "";
+    /*
+    listComments will add every comment to a list in the DOM, though by default 
+    each li will be set to "display: none", via a CSS class. 
+
+    In this way, we do not have to re-fetch the data from the API every time we want 
+    to show a new comment. We only manipulate the DOM, not the data.
+    
+    Eventually shown to the end user will be a single comment, randomly selected 
+    from the list,  with its display set to "block". This is done in the 
+    showRandomComment() method.
+    */
+    ol.innerHTML = ""; // Clear the list before adding new comments
     data.items
-      .filter((item) => !item.snippet.topLevelComment.snippet.textDisplay.includes("<br>"))
+      .filter((item) => {
+        // This will filter out any comments that contain line breaks
+        const text = item.snippet.topLevelComment.snippet.textDisplay;
+        return !text.includes("<br>");
+      })
       .map((item) => {
+        // Set up variables for each comment
         const comment = item.snippet.topLevelComment.snippet;
         const likes = comment.likeCount;
         const text = comment.textDisplay;
@@ -25,6 +41,7 @@ export const parseData = {
         const author = comment.authorDisplayName;
         const authorUrl = comment.authorChannelUrl;
 
+        // Create the li to be used in the DOM
         const li = `<li class="single-comment ">
           <div class="comment-wrap">
             <div class="comment-text ${text.length >= 200 ? "smaller" : text.length <= 5 ? "larger" : ""}">${
@@ -38,12 +55,19 @@ export const parseData = {
             </div>
           </div>
         </li>`;
+
+        // This will add each li to the DOM
         ol.insertAdjacentHTML("beforeend", li);
       });
 
+    // This creates a NodeList of all the comments in the DOM
+    // It must be done after the comments are added to the DOM
     const allComments = document.querySelectorAll(".single-comment");
+
+    // This will show a random comment on page load
     parseData.showRandomComment(allComments);
 
+    // This will show a random comment when the "New Comment" button is clicked
     newCommentBtn.addEventListener("click", () => {
       allComments.forEach((comment) => (comment.style.display = "none"));
       parseData.showRandomComment(allComments);
