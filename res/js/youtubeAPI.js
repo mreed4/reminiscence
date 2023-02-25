@@ -16,7 +16,7 @@ function getVideoTitle(videoId) {
       })
       .catch((e) => console.log(e));
   } else {
-    console.log("No videoId");
+    // console.log("No videoId");
   }
 }
 
@@ -27,7 +27,8 @@ function getComments(videoId, commentAmount = 20) {
       .then((response) => response.json())
       .then((data) => {
         if (data) {
-          console.log(data.items.length);
+          const numComments = data.items.length;
+          // console.log("Number of comments: " + numComments);
           parseData.listComments(data);
         }
       })
