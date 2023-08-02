@@ -1,5 +1,8 @@
 {
   "dependencies": {
     "netlify-cli": "^15.10.0"
+  },
+  "scripts": {
+    "netlify": "netlify"
   }
 }
