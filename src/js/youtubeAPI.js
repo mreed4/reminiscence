@@ -1,13 +1,15 @@
 import { config } from "./config.js";
 import { parseData } from "./parseData.js";
 
+const netlify = "/.netlify/functions/";
+
 const key = config.key;
 const apiBase = "https://www.googleapis.com/youtube/v3";
 const youtubeOrder = "relevance"; // relevance, time, orderUnspecified
 
 function getVideoTitle(videoId) {
   if (videoId) {
-    fetch(`${apiBase}/videos?part=snippet&id=${videoId}&key=${key}`)
+    fetch(`${netlify}getVideoTitle?videoId=${videoId}`)
       .then((response) => response.json())
       .then((data) => {
         if (data) {
@@ -15,6 +17,15 @@ function getVideoTitle(videoId) {
         }
       })
       .catch((e) => console.log(e));
+
+    // fetch(`${apiBase}/videos?part=snippet&id=${videoId}&key=${key}`)
+    //   .then((response) => response.json())
+    //   .then((data) => {
+    //     if (data) {
+    //       parseData.showVideoTitle(data);
+    //     }
+    //   })
+    //   .catch((e) => console.log(e));
   } else {
     // console.log("No videoId");
   }
