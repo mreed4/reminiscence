@@ -1,9 +1,9 @@
 const handler = async (event) => {
-  const { videoId, commentAmount } = event.queryStringParameters;
+  const { videoId } = event.queryStringParameters;
   const API_KEY = process.env.API_KEY;
 
   const endpoint = `https://www.googleapis.com/youtube/v3/commentThreads`;
-  const URLparams = [`part=snippet`, `videoId=${videoId}`, `key=${API_KEY}`, `order=relevance`, `maxResults=${commentAmount}`].join("&");
+  const URLparams = [`part=snippet`, `videoId=${videoId}`, `key=${API_KEY}`, `order=relevance`, `maxResults=100`].join("&");
 
   const URL = [endpoint, URLparams].join("?");
 
