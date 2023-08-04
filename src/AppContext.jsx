@@ -7,22 +7,28 @@ const netlify = "/.netlify/functions";
 
 const AppContext = createContext();
 
+const initialAppState = {
+  videoId: "",
+  videoTitle: "",
+  videoComments: [],
+  randomComment: {},
+  commentError: false,
+};
+
 function AppProvider({ children }) {
-  const [appState, setAppState] = useState({
-    videoId: "",
-    videoTitle: "",
-    videoComments: [],
-    randomComment: {},
-  });
+  const [appState, setAppState] = useState({ ...initialAppState });
 
   const handlePaste = (event) => {
     const videoURL = event.clipboardData.getData("text");
     const videoId = youtubeParser(videoURL);
 
-    setAppState((prev) => ({ ...prev, videoId }));
-
-    getVideoTitle(videoId);
-    getVideoComments(videoId);
+    if (videoId) {
+      setAppState((prev) => ({ ...prev, videoId, commentError: false }));
+      getVideoTitle(videoId);
+      getVideoComments(videoId);
+    } else {
+      setAppState((prev) => ({ ...prev, commentError: true, videoId: "", videoTitle: "", videoComments: [], randomComment: {} }));
+    }
 
     // console.log("videoId", videoId);
   };
