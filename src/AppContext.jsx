@@ -12,6 +12,7 @@ function AppProvider({ children }) {
     videoId: "",
     videoTitle: "",
     videoComments: [],
+    randomComment: {},
   });
 
   const handlePaste = (event) => {
@@ -23,7 +24,7 @@ function AppProvider({ children }) {
     getVideoTitle(videoId);
     getVideoComments(videoId);
 
-    console.log("videoId", videoId);
+    // console.log("videoId", videoId);
   };
 
   async function getVideoTitle(videoId) {
@@ -34,7 +35,7 @@ function AppProvider({ children }) {
 
     setAppState((prev) => ({ ...prev, videoTitle }));
 
-    console.log("titleData", titleData);
+    // console.log("titleData", titleData);
   }
 
   async function getVideoComments(videoId) {
@@ -45,13 +46,25 @@ function AppProvider({ children }) {
 
     setAppState((prev) => ({ ...prev, videoComments }));
 
-    console.log("commentsData", commentsData);
+    getRandomComment(videoComments);
+
+    // console.log("commentsData", commentsData);
+  }
+
+  function getRandomComment(comments) {
+    const rand = Math.floor(Math.random() * comments.length);
+    const randomComment = comments[rand];
+
+    // console.log("randomComment", randomComment);
+
+    setAppState((prev) => ({ ...prev, randomComment }));
   }
 
   const value = {
     appState,
     setAppState,
     handlePaste,
+    getRandomComment,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

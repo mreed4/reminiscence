@@ -4,13 +4,15 @@ import { AppContext } from "./AppContext";
 import "./App.css";
 
 function App() {
-  const { appState, handlePaste } = useContext(AppContext);
-  const { videoTitle, videoURL, videoComments } = appState;
+  const { appState, handlePaste, getRandomComment } = useContext(AppContext);
+  const { videoTitle, videoURL, randomComment, videoComments } = appState;
 
   const inputRef = useRef();
 
   useEffect(() => {
-    inputRef.current.focus();
+    if (document.activeElement === inputRef.current) {
+      inputRef.current.focus();
+    }
 
     if (appState.videoId) {
       console.log("appState", appState);
@@ -22,11 +24,8 @@ function App() {
     <>
       <input type="text" placeholder="Paste a Youtube URL here" ref={inputRef} onPaste={handlePaste} value={videoURL} />
       <h1>{videoTitle}</h1>
-      <ol>
-        {videoComments.map((comment) => (
-          <li key={comment.id}>{comment.snippet.topLevelComment.snippet.textOriginal}</li>
-        ))}
-      </ol>
+      <p>{randomComment.snippet?.topLevelComment?.snippet?.textOriginal}</p>
+      <button onClick={() => getRandomComment(videoComments)}>Random Comment</button>
     </>
   );
 }
