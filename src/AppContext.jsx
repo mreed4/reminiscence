@@ -12,25 +12,30 @@ const initialAppState = {
   videoTitle: "",
   videoComments: [],
   randomComment: {},
+  invalidURL: false,
   commentError: false,
 };
 
 function AppProvider({ children }) {
   const [appState, setAppState] = useState({ ...initialAppState });
+  const { randomComment } = appState;
+
+  const commentLoaded = Object.keys(randomComment).length > 0;
 
   const handlePaste = (event) => {
     const videoURL = event.clipboardData.getData("text");
     const videoId = youtubeParser(videoURL);
 
     if (videoId) {
-      setAppState((prev) => ({ ...prev, videoId, commentError: false }));
+      setAppState((prev) => ({ ...prev, videoId, invalidURL: false, commentError: false })); // reset errors
       getVideoTitle(videoId);
-      getVideoComments(videoId);
-    } else {
-      setAppState((prev) => ({ ...prev, commentError: true, videoId: "", videoTitle: "", videoComments: [], randomComment: {} }));
-    }
 
-    // console.log("videoId", videoId);
+      setAppState((prev) => ({ ...prev, videoComments: [], randomComment: {} })); // reset comments
+      getVideoComments(videoId);
+      /* */
+    } else {
+      setAppState((prev) => ({ ...prev, invalidURL: true, videoId: "", videoTitle: "", videoComments: [], randomComment: {} }));
+    }
   };
 
   async function getVideoTitle(videoId) {
@@ -40,28 +45,40 @@ function AppProvider({ children }) {
     const videoTitle = titleData.items[0].snippet.title;
 
     setAppState((prev) => ({ ...prev, videoTitle }));
-
-    // console.log("titleData", titleData);
   }
 
   async function getVideoComments(videoId) {
     const response = await fetch(`${netlify}/getVideoComments?videoId=${videoId}`);
     const commentsData = await response.json();
 
-    const videoComments = commentsData.items;
+    if (commentsData.error) {
+      setAppState((prev) => ({
+        ...prev,
+        commentError: true,
+        invalidURL: false,
+        videoId: "",
+        // videoTitle: "",
+        videoComments: [],
+        randomComment: {},
+      }));
+      return;
+    }
+
+    const videoComments = commentsData.items.filter((item) => {
+      const text = item.snippet.topLevelComment.snippet.textDisplay;
+      const lineBreak = text.includes("<br />") || text.includes("<br>");
+
+      return !lineBreak;
+    });
 
     setAppState((prev) => ({ ...prev, videoComments }));
 
     getRandomComment(videoComments);
-
-    // console.log("commentsData", commentsData);
   }
 
   function getRandomComment(comments) {
     const rand = Math.floor(Math.random() * comments.length);
     const randomComment = comments[rand];
-
-    // console.log("randomComment", randomComment);
 
     setAppState((prev) => ({ ...prev, randomComment }));
   }
@@ -71,6 +88,7 @@ function AppProvider({ children }) {
     setAppState,
     handlePaste,
     getRandomComment,
+    commentLoaded,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

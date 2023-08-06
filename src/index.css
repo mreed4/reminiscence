@@ -2,10 +2,12 @@
 
 :root {
   line-height: 1.5;
-  font-weight: 400;
+  /* font-weight: 400; */
+  font-family: "Libre Baskerville", serif;
 
   --black: #14213d;
   --white: gainsboro;
+  --red: #d44d5c;
 
   color-scheme: light dark;
   color: var(--black);
@@ -18,12 +20,32 @@
   -webkit-text-size-adjust: 100%;
 }
 
+:root:has(.invalid-url),
+:root:has(.comments-error) {
+  background-color: var(--red);
+  color: var(--white);
+}
+
+:root:has(.invalid-url) footer input[type="text"],
+:root:has(.comments-error) footer input[type="text"] {
+  color: var(--white);
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-weight: normal;
+  /* font-weight: normal; */
   user-select: none;
+}
+
+h1 {
+  /* font-size: 2em; */
+  font-weight: 700;
+}
+
+body {
+  overflow: hidden;
 }
 
 a {

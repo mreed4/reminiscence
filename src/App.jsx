@@ -1,40 +1,23 @@
-import { useContext, useEffect, useRef } from "react";
+import { useContext } from "react";
 import { AppContext } from "./AppContext";
+
+import Comment from "./assets/Components/Comment";
+import Footer from "./assets/Components/Footer";
 
 import "./App.css";
 
 function App() {
-  const { appState, handlePaste, getRandomComment } = useContext(AppContext);
-  const { videoTitle, videoURL, randomComment, videoComments, commentError, videoId } = appState;
-
-  const inputRef = useRef();
-
-  useEffect(() => {
-    // inputRef.current.focus();
-
-    if (videoId) {
-      console.log("appState", appState);
-      inputRef.current.value = "";
-    }
-  }, [appState]);
+  const { appState, commentLoaded } = useContext(AppContext);
+  const { commentError, invalidURL } = appState;
 
   return (
     <>
-      <input
-        type="text"
-        placeholder="Paste a Youtube URL here"
-        ref={inputRef}
-        onPaste={handlePaste}
-        value={videoURL}
-        /* */
-      />
-      <button onClick={() => getRandomComment(videoComments)} disabled={!videoComments.length}>
-        Random Comment
-      </button>
-      {commentError ? <h1>Invalid Youtube URL</h1> : <h1>{videoTitle}</h1>}
-      <div>
-        <p>{randomComment.snippet?.topLevelComment?.snippet?.textOriginal}</p>
-      </div>
+      <main>
+        {commentLoaded ? <Comment /> : <p className="prompt">Enter a video URL below.</p>}
+        {commentError && <p className="comments-error">Comments could not be loaded</p>}
+        {invalidURL && <p className="invalid-url">Invalid URL</p>}
+      </main>
+      <Footer />
     </>
   );
 }

@@ -1,0 +1,76 @@
+.comment {
+  width: 650px;
+  /* animation: fade-in 125ms ease-in-out; */
+}
+
+.comment-enter {
+  opacity: 0;
+}
+
+.comment-enter-active {
+  opacity: 1;
+  transition: opacity 125ms ease-in-out;
+}
+
+.comment-exit {
+  opacity: 1;
+}
+
+.comment-exit-active {
+  opacity: 0;
+  transition: opacity 125ms ease-in-out;
+}
+
+.comment .comment-details {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  font-family: "Roboto Condensed", sans-serif;
+  color: hsla(0, 0%, 0%, 0.5);
+}
+
+.comment .comment-details .comment-author {
+  /* margin-right: 10px; */
+}
+
+.comment .comment-details .comment-published {
+}
+
+.comment .comment-details .comment-published::before {
+  content: "•";
+  margin: 0 5px;
+}
+
+.comment .comment-text::selection {
+  background-color: gold;
+}
+
+.comment .comment-text {
+  margin: 10px 0;
+  font-size: 3rem;
+  line-height: 1.25;
+  user-select: text;
+  text-transform: lowercase;
+}
+.comment .comment-text.smaller {
+  font-size: 2.25em;
+}
+
+.comment .comment-text.larger {
+  font-size: 5.25em;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .comment .comment-details {
+    color: hsla(0, 100%, 100%, 0.5);
+  }
+}
