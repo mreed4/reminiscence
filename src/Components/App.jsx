@@ -13,7 +13,7 @@ function App() {
   return (
     <>
       <main>
-        {commentLoaded ? <Comment /> : <p className="prompt">Paste a video URL below.</p>}
+        {commentLoaded ? <Comment /> : <p className="prompt">Paste a YouTube URL below.</p>}
         {commentError && <p className="comments-error">Comments could not be loaded</p>}
         {invalidURL && <p className="invalid-url">Invalid URL</p>}
       </main>
