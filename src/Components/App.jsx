@@ -1,10 +1,10 @@
 import { useContext } from "react";
 import { AppContext } from "./AppContext";
 
-import Comment from "./assets/Components/Comment";
-import Footer from "./assets/Components/Footer";
+import Comment from "./Comment";
+import Footer from "./Footer";
 
-import "./App.css";
+import "../assets/css/App.css";
 
 function App() {
   const { appState, commentLoaded } = useContext(AppContext);

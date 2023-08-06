@@ -3,24 +3,6 @@
   /* animation: fade-in 125ms ease-in-out; */
 }
 
-.comment-enter {
-  opacity: 0;
-}
-
-.comment-enter-active {
-  opacity: 1;
-  transition: opacity 125ms ease-in-out;
-}
-
-.comment-exit {
-  opacity: 1;
-}
-
-.comment-exit-active {
-  opacity: 0;
-  transition: opacity 125ms ease-in-out;
-}
-
 .comment .comment-details {
   display: flex;
   align-items: center;
@@ -45,6 +27,13 @@
   background-color: gold;
 }
 
+.comment.center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 .comment .comment-text {
   margin: 10px 0;
   font-size: 3rem;
@@ -58,6 +47,10 @@
 
 .comment .comment-text.larger {
   font-size: 5.25em;
+}
+
+.comment .justify {
+  text-align: justify;
 }
 
 @keyframes fade-in {

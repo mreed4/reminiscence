@@ -18,6 +18,8 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+
+  transition: background-color 75ms ease-in-out, color 125ms ease-in-out;
 }
 
 :root:has(.invalid-url),

@@ -1,10 +1,10 @@
 import { useContext } from "react";
-import { AppContext } from "../../AppContext";
-import { truncate } from "../js/helpers";
+import { AppContext } from "./AppContext";
+import { truncate } from "../assets/js/helpers";
 
 import Controls from "./Controls";
 
-import "../css/Footer.css";
+import "../assets/css/Footer.css";
 
 export default function Footer() {
   const { appState } = useContext(AppContext);

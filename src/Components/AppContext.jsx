@@ -1,7 +1,7 @@
 import { createContext, useState } from "react";
 import PropTypes from "prop-types";
 
-import { youtubeParser } from "./assets/js/helpers";
+import { youtubeParser } from "../assets/js/helpers";
 
 const netlify = "/.netlify/functions";
 

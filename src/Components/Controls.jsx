@@ -1,6 +1,6 @@
 import { useRef, useContext, useEffect } from "react";
 import PropTypes from "prop-types";
-import { AppContext } from "../../AppContext";
+import { AppContext } from "./AppContext";
 
 export default function Controls({ source }) {
   const { appState, handlePaste, getRandomComment } = useContext(AppContext);
