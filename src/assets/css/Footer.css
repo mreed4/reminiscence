@@ -70,7 +70,7 @@ footer button:disabled {
 
 @media (prefers-color-scheme: dark) {
   footer input[type="text"] {
-    background-color: hsla(0, 100%, 100%, 0.05);
+    /* background-color: hsla(0, 100%, 100%, 0.05); */
     color: hsla(0, 0%, 100%, 0.5);
   }
 
