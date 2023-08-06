@@ -11,10 +11,12 @@ export default function Comment() {
 
   const publishedRaw = Date.parse(randomComment.snippet?.topLevelComment?.snippet?.publishedAt) / 1000;
   const author = randomComment.snippet?.topLevelComment?.snippet?.authorDisplayName;
+  const authorChannelURL = randomComment.snippet?.topLevelComment?.snippet?.authorChannelUrl;
   const commentText = randomComment.snippet?.topLevelComment?.snippet?.textOriginal;
   const published = getRelativeTime(publishedRaw);
 
-  const dynamicFontSize = commentText.length >= 200 ? "smaller" : commentText.length <= 5 ? "larger" : null;
+  const dynamicFontSize =
+    commentText.replaceAll(" ", "").length >= 200 ? "smaller" : commentText.replaceAll(" ", "").length <= 15 ? "larger" : null;
 
   const center = commentText.replaceAll(" ", "").length <= 15 ? "center" : null;
   const justify = commentText.replaceAll(" ", "").length >= 150 ? "justify" : null;
@@ -27,7 +29,11 @@ export default function Comment() {
     <div className={`comment ${center}`}>
       <p className={`comment-text ${dynamicFontSize} ${justify}`}>{dynamicComment}</p>
       <div className="comment-details">
-        <span className="comment-author">{author}</span>
+        <span className="comment-author">
+          <a href={`${authorChannelURL}`} target="_blank" rel="noreferrer">
+            {author}
+          </a>
+        </span>
         <span className="comment-published">{published}</span>
       </div>
     </div>

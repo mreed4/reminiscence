@@ -11,8 +11,16 @@
   color: hsla(0, 0%, 0%, 0.5);
 }
 
-.comment .comment-details .comment-author {
-  /* margin-right: 10px; */
+.comment .comment-details .comment-author a {
+  text-decoration: underline;
+  text-decoration-color: hsla(0, 0%, 100%, 0.35);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 2px;
+  transition: text-underline-offset 125ms ease-in-out;
+}
+
+.comment .comment-details .comment-author a:hover {
+  text-underline-offset: 4px;
 }
 
 .comment .comment-details .comment-published {

@@ -17,6 +17,10 @@ footer h1 {
   align-items: center;
 }
 
+footer h1 i {
+  margin-right: 0.25em;
+}
+
 footer .video-title {
   font-size: 1.5em;
 }
@@ -30,6 +34,7 @@ footer input[type="text"] {
   font-size: 1.5em;
   font-family: "Roboto Condensed", sans-serif;
   background-color: hsla(0, 100%, 100%, 0.25);
+  background-color: transparent;
   color: hsla(0, 0%, 0%, 0.75);
   transition: background-color 125ms ease-in-out, transform 125ms ease-in-out;
 }
