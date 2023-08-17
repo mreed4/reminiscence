@@ -74,4 +74,8 @@
   .comment .comment-details {
     color: hsla(0, 100%, 100%, 0.5);
   }
+
+  .comment .comment-text::selection {
+    background-color: darkgoldenrod;
+  }
 }
