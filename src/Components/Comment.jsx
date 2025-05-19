@@ -14,6 +14,7 @@ export default function Comment() {
   const authorChannelURL = randomComment.snippet?.topLevelComment?.snippet?.authorChannelUrl;
   const commentText = randomComment.snippet?.topLevelComment?.snippet?.textOriginal;
   const published = getRelativeTime(publishedRaw);
+  const commentId = randomComment.id; // Get unique comment ID
 
   const dynamicFontSize =
     commentText.replaceAll(" ", "").length >= 200 ? "smaller" : commentText.replaceAll(" ", "").length <= 15 ? "larger" : null;
@@ -26,7 +27,7 @@ export default function Comment() {
   const dynamicComment = words.length >= 50 ? words.slice(0, 50).join(" ") + "..." : commentText;
 
   return (
-    <div className={`comment ${center}`}>
+    <div className={`comment ${center}`} key={commentId}>
       <p className={`comment-text ${dynamicFontSize} ${justify}`}>{dynamicComment}</p>
       <div className="comment-details">
         <span className="comment-author">

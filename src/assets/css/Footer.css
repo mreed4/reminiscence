@@ -82,3 +82,56 @@ footer button:disabled {
     color: hsla(0, 0%, 100%, 0.25);
   }
 }
+
+/* Mobile responsive styles */
+@media (max-width: 768px) {
+  footer {
+    position: fixed;
+    height: auto;
+    flex-wrap: wrap;
+    padding: 0.75em;
+    gap: 10px;
+  }
+
+  footer h1 {
+    font-size: 1.25em;
+  }
+
+  footer .video-title {
+    font-size: 1.25em;
+  }
+
+  footer input[type="text"] {
+    font-size: 1.25em;
+    flex: 1;
+    min-width: 150px;
+  }
+
+  footer button {
+    font-size: 1.25em;
+  }
+}
+
+@media (max-width: 480px) {
+  footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  footer h1 {
+    margin-bottom: 0.5em;
+  }
+
+  footer .video-title {
+    margin-bottom: 0.5em;
+    width: 100%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  footer input[type="text"] {
+    width: 100%;
+    margin-bottom: 0.5em;
+  }
+}

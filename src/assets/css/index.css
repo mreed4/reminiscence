@@ -1,5 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Libre+Baskerville&family=Roboto+Condensed:wght@300;700&display=swap");
 
+/* Ensure this is added to your HTML file: <meta name="viewport" content="width=device-width, initial-scale=1.0"> */
+
 :root {
   line-height: 1.5;
   /* font-weight: 400; */
@@ -59,5 +61,22 @@ a {
   :root {
     color: var(--white);
     background-color: var(--black);
+  }
+}
+
+/* Mobile responsive styles */
+@media (max-width: 768px) {
+  :root {
+    font-size: 14px; /* Slightly smaller base font size for mobile */
+  }
+
+  body {
+    overflow-y: auto; /* Allow scrolling on mobile */
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    font-size: 12px; /* Even smaller base font for very small screens */
   }
 }

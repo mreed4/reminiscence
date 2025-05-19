@@ -1,6 +1,10 @@
 .comment {
   width: 650px;
-  /* animation: fade-in 125ms ease-in-out; */
+  animation-name: fade-in;
+  animation-duration: 125ms;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+  animation-play-state: running;
 }
 
 .comment .comment-details {
@@ -77,5 +81,39 @@
 
   .comment .comment-text::selection {
     background-color: darkgoldenrod;
+  }
+}
+
+/* Mobile responsive styles */
+@media (max-width: 768px) {
+  .comment {
+    width: 100%;
+    max-width: 650px;
+  }
+
+  .comment .comment-text {
+    font-size: 2.5rem;
+  }
+
+  .comment .comment-text.smaller {
+    font-size: 2rem;
+  }
+
+  .comment .comment-text.larger {
+    font-size: 4rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .comment .comment-text {
+    font-size: 2rem;
+  }
+
+  .comment .comment-text.smaller {
+    font-size: 1.75rem;
+  }
+
+  .comment .comment-text.larger {
+    font-size: 3rem;
   }
 }

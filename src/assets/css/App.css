@@ -1,4 +1,5 @@
 #root {
+  width: 100%;
 }
 
 main {
@@ -7,6 +8,8 @@ main {
   align-items: center;
   justify-content: center;
   height: 100vh;
+  padding: 0 15px;
+  box-sizing: border-box;
 }
 
 main .prompt {
@@ -17,7 +20,34 @@ main .prompt {
 .comments-error {
   font-size: 2rem;
   font-family: "Roboto Condensed", sans-serif;
+  text-align: center;
 }
 
 @media (prefers-reduced-motion: no-preference) {
+}
+
+/* Mobile responsive styles */
+@media (max-width: 768px) {
+  main {
+    height: auto;
+    min-height: 100vh;
+    padding: 60px 15px;
+    justify-content: flex-start;
+  }
+
+  main .prompt {
+    font-size: 2.5rem;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  main .prompt {
+    font-size: 2rem;
+  }
+
+  .invalid-url,
+  .comments-error {
+    font-size: 1.5rem;
+  }
 }
