@@ -1,5 +1,4 @@
 import { useRef, useContext, useEffect } from "react";
-import PropTypes from "prop-types";
 import { AppContext } from "./AppContext";
 
 export default function Controls({ source }) {
@@ -55,7 +54,3 @@ export default function Controls({ source }) {
     </div>
   );
 }
-
-Controls.propTypes = {
-  source: PropTypes.string,
-};

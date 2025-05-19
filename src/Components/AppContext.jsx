@@ -1,5 +1,4 @@
 import { createContext, useState } from "react";
-import PropTypes from "prop-types";
 
 import { youtubeParser } from "../assets/js/helpers";
 
@@ -90,12 +89,7 @@ function AppProvider({ children }) {
     getRandomComment,
     commentLoaded,
   };
-
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 }
-
-AppProvider.propTypes = {
-  children: PropTypes.node.isRequired,
-};
 
 export { AppContext, AppProvider };
