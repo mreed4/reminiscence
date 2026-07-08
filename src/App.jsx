@@ -4,8 +4,6 @@ import { AppContext } from "../contexts/AppContext";
 import Comment from "./Comment";
 import Footer from "./Footer";
 
-import "../assets/css/App.css";
-
 function App() {
   const { appState, commentLoaded } = useContext(AppContext);
   const { commentError, invalidURL } = appState;

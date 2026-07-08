@@ -1,7 +1,5 @@
 import useComment from "../hooks/useComment";
 
-import "../assets/css/Comment.css";
-
 export default function Comment() {
   const { commentId, author, authorChannelURL, published, dynamicFontSize, center, justify, dynamicComment } = useComment();
 

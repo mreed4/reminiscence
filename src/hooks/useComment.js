@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { AppContext } from "../contexts/AppContext";
-import { getRelativeTime, getCommentData, getCommentPresentation } from "../assets/js/helpers";
+import { getRelativeTime, getCommentData, getCommentPresentation } from "../utils/helpers";
 
 export default function useComment() {
   const { appState } = useContext(AppContext);

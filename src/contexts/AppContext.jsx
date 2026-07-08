@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 
-import { youtubeParser } from "../assets/js/helpers";
+import { youtubeParser } from "../utils/helpers";
 
 const netlify = "/.netlify/functions";
 
