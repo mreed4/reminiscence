@@ -6,7 +6,10 @@ import Footer from "./components/Footer";
 
 function App() {
   const { appState, commentLoaded } = useContext(AppContext);
-  const { commentError, errorMessage, invalidURL, isLoading } = appState;
+  const { errorMessage, invalidURL, status } = appState;
+
+  const isLoading = status === "loading";
+  const hasError = status === "error";
 
   return (
     <>
@@ -18,9 +21,7 @@ function App() {
         ) : (
           <p className="prompt">Paste a YouTube URL below.</p>
         )}
-        {commentError && (
-          <p className="comments-error">{errorMessage || "Comments could not be loaded. Check Netlify Dev or your network."}</p>
-        )}
+        {hasError && <p className="comments-error">{errorMessage || "Comments could not be loaded. Check Netlify Dev or your network."}</p>}
         {invalidURL && <p className="invalid-url">Invalid URL</p>}
       </main>
       <Footer />

@@ -4,8 +4,8 @@ import { getRelativeTime, getCommentData, getCommentPresentation } from "../util
 
 export default function useComment() {
   const { appState } = useContext(AppContext);
-  const { randomComment } = appState;
-  const { commentId, author, authorChannelURL, publishedRaw, commentText } = getCommentData(randomComment);
+  const { selectedComment } = appState;
+  const { commentId, author, authorChannelURL, publishedRaw, commentText } = getCommentData(selectedComment);
 
   const published = getRelativeTime(publishedRaw);
   const { dynamicFontSize, center, justify, dynamicComment } = getCommentPresentation(commentText);
