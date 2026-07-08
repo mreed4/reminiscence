@@ -2,8 +2,8 @@ import { useRef, useEffect, useState, useContext } from "react";
 import { AppContext } from "../contexts/AppContext";
 
 export default function useControls() {
-  const { appState, handlePaste, loadVideoUrl, getRandomComment, cycleThemeMode } = useContext(AppContext);
-  const { videoComments, selectedComment, videoId, themeMode, status } = appState;
+  const { appState, handlePaste, loadVideoUrl, getRandomComment, cycleThemeMode, clearInvalidURL, clearData } = useContext(AppContext);
+  const { videoComments, selectedComment, videoId, themeMode, status, invalidURL } = appState;
   const isLoading = status === "loading";
 
   const [inputValue, setInputValue] = useState("");
@@ -22,6 +22,9 @@ export default function useControls() {
   }, [videoId]);
 
   const handleInputChange = (event) => {
+    if (invalidURL) {
+      clearInvalidURL();
+    }
     setInputValue(event.target.value);
   };
 
@@ -54,8 +57,10 @@ export default function useControls() {
     handleSubmit,
     getRandomComment,
     cycleThemeMode,
+    clearData,
     videoComments,
     themeMode,
     isLoading,
+    videoId,
   };
 }

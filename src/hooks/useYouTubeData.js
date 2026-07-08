@@ -62,10 +62,20 @@ function reducer(state, action) {
         videoComments: [],
         selectedCommentIndex: null,
       };
+    case "CLEAR_INVALID_URL":
+      return {
+        ...state,
+        invalidURL: false,
+        errorMessage: "",
+      };
     case "SET_STATUS":
       return {
         ...state,
         status: action.payload,
+      };
+    case "CLEAR":
+      return {
+        ...initialYouTubeState,
       };
     default:
       return state;
@@ -147,12 +157,22 @@ export default function useYouTubeData() {
     loadVideoUrl(videoURL);
   };
 
+  const clearInvalidURL = () => {
+    dispatch({ type: "CLEAR_INVALID_URL" });
+  };
+
+  const clearData = () => {
+    dispatch({ type: "CLEAR" });
+  };
+
   return {
     appState,
     selectedComment,
     handlePaste,
     loadVideoUrl,
     getRandomComment,
+    clearInvalidURL,
+    clearData,
     commentLoaded,
   };
 }

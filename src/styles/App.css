@@ -21,6 +21,46 @@ main .prompt.loading {
   font-family: "JetBrains Mono", monospace;
 }
 
+main .prompt-form {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 800px;
+}
+
+main .prompt-form input,
+main .prompt-form .submit-button {
+  font-family: inherit;
+}
+
+main .prompt-form input {
+  flex: 1;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: inherit;
+  font-size: 3rem;
+  text-align: center;
+  white-space: nowrap;
+}
+
+main .prompt-form input::placeholder {
+  color: currentColor;
+  opacity: 0.6;
+}
+
+main .prompt-form input:focus {
+  outline: none;
+}
+
+main .prompt-form .submit-button {
+  display: none;
+}
+
 .invalid-url,
 .comments-error {
   font-size: 2rem;

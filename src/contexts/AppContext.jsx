@@ -7,7 +7,15 @@ const AppContext = createContext();
 
 function AppProvider({ children }) {
   const [themeMode, cycleThemeMode] = useThemeMode();
-  const { appState: youTubeState, selectedComment, handlePaste, getRandomComment, commentLoaded } = useYouTubeData();
+  const {
+    appState: youTubeState,
+    selectedComment,
+    handlePaste,
+    getRandomComment,
+    clearInvalidURL,
+    clearData,
+    commentLoaded,
+  } = useYouTubeData();
 
   const appState = { ...youTubeState, themeMode, selectedComment };
 
@@ -15,6 +23,8 @@ function AppProvider({ children }) {
     appState,
     handlePaste,
     getRandomComment,
+    clearInvalidURL,
+    clearData,
     cycleThemeMode,
     commentLoaded,
   };
