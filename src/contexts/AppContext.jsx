@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 
 import { youtubeParser } from "../assets/js/helpers";
 
@@ -13,13 +13,25 @@ const initialAppState = {
   randomComment: {},
   invalidURL: false,
   commentError: false,
+  themeMode: "auto",
 };
 
 function AppProvider({ children }) {
-  const [appState, setAppState] = useState({ ...initialAppState });
-  const { randomComment } = appState;
+  const [appState, setAppState] = useState(() => {
+    const storedMode = typeof window !== "undefined" ? localStorage.getItem("themeMode") : null;
+    return {
+      ...initialAppState,
+      themeMode: storedMode === "light" || storedMode === "dark" || storedMode === "auto" ? storedMode : "auto",
+    };
+  });
+  const { randomComment, themeMode } = appState;
 
   const commentLoaded = Object.keys(randomComment).length > 0;
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = themeMode;
+    localStorage.setItem("themeMode", themeMode);
+  }, [themeMode]);
 
   const handlePaste = (event) => {
     const videoURL = event.clipboardData.getData("text");
@@ -82,11 +94,21 @@ function AppProvider({ children }) {
     setAppState((prev) => ({ ...prev, randomComment }));
   }
 
+  const cycleThemeMode = () => {
+    setAppState((prev) => {
+      const nextMode = prev.themeMode === "auto" ? "dark" : prev.themeMode === "dark" ? "light" : "auto";
+      return { ...prev, themeMode: nextMode };
+    });
+  };
+
   const value = {
     appState,
     setAppState,
     handlePaste,
+    getVideoTitle,
+    getVideoComments,
     getRandomComment,
+    cycleThemeMode,
     commentLoaded,
   };
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

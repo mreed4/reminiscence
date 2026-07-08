@@ -11,6 +11,12 @@ footer {
   padding: 1em 1em 1.5em;
 }
 
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
 footer h1 {
   letter-spacing: -1px;
   display: flex;
@@ -36,7 +42,9 @@ footer input[type="text"] {
   background-color: hsla(0, 100%, 100%, 0.25);
   background-color: transparent;
   color: hsla(0, 0%, 0%, 0.75);
-  transition: background-color 125ms ease-in-out, transform 125ms ease-in-out;
+  transition:
+    background-color 125ms ease-in-out,
+    transform 125ms ease-in-out;
 }
 
 footer input[type="text"]:focus {
@@ -58,7 +66,6 @@ footer button {
   outline: none;
   background-color: transparent;
   font-size: 1.5em;
-  /* color: hsla(0, 0%, 0%, 0.5); */
   cursor: pointer;
   margin-left: 0.5em;
 }
@@ -66,6 +73,26 @@ footer button {
 footer button:disabled {
   color: hsla(0, 0%, 0%, 0.25);
   cursor: default;
+}
+
+footer button.theme-toggle {
+  display: grid;
+  place-items: center;
+  width: 2.2em;
+  height: 2.2em;
+  border-radius: 999px;
+  transition:
+    transform 125ms ease-in-out,
+    background-color 125ms ease-in-out;
+}
+
+footer button.theme-toggle:hover {
+  transform: scale(1.05);
+  background-color: hsla(0, 0%, 0%, 0.05);
+}
+
+footer button.theme-toggle.active {
+  background-color: hsla(0, 0%, 0%, 0.08);
 }
 
 @media (prefers-color-scheme: dark) {

@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { AppContext } from "./AppContext";
+import { AppContext } from "../contexts/AppContext";
 import { truncate } from "../assets/js/helpers";
 
 import Controls from "./Controls";

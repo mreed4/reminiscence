@@ -1,3 +1,9 @@
+allowBuilds:
+  '@netlify/esbuild': false
+  esbuild: false
+  netlify-cli: false
+  protobufjs: false
+  unix-dgram: false
 onlyBuiltDependencies:
   - esbuild
   - netlify-cli

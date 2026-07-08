@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { AppProvider } from "./Components/AppContext";
+import { AppProvider } from "./contexts/AppContext";
 
 import App from "./Components/App.jsx";
 
@@ -11,5 +11,5 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <AppProvider>
       <App />
     </AppProvider>
-  </React.StrictMode>
+  </React.StrictMode>,
 );

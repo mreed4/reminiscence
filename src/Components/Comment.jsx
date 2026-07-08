@@ -1,30 +1,9 @@
-import { useContext } from "react";
-import { AppContext } from "./AppContext";
-
-import { getRelativeTime } from "../assets/js/helpers";
+import useComment from "../hooks/useComment";
 
 import "../assets/css/Comment.css";
 
 export default function Comment() {
-  const { appState } = useContext(AppContext);
-  const { randomComment } = appState;
-
-  const publishedRaw = Date.parse(randomComment.snippet?.topLevelComment?.snippet?.publishedAt) / 1000;
-  const author = randomComment.snippet?.topLevelComment?.snippet?.authorDisplayName;
-  const authorChannelURL = randomComment.snippet?.topLevelComment?.snippet?.authorChannelUrl;
-  const commentText = randomComment.snippet?.topLevelComment?.snippet?.textOriginal;
-  const published = getRelativeTime(publishedRaw);
-  const commentId = randomComment.id; // Get unique comment ID
-
-  const dynamicFontSize =
-    commentText.replaceAll(" ", "").length >= 200 ? "smaller" : commentText.replaceAll(" ", "").length <= 15 ? "larger" : null;
-
-  const center = commentText.replaceAll(" ", "").length <= 15 ? "center" : null;
-  const justify = commentText.replaceAll(" ", "").length >= 150 ? "justify" : null;
-
-  const words = commentText.split(" ");
-
-  const dynamicComment = words.length >= 50 ? words.slice(0, 50).join(" ") + "..." : commentText;
+  const { commentId, author, authorChannelURL, published, dynamicFontSize, center, justify, dynamicComment } = useComment();
 
   return (
     <div className={`comment ${center}`} key={commentId}>

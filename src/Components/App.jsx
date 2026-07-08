@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { AppContext } from "./AppContext";
+import { AppContext } from "../contexts/AppContext";
 
 import Comment from "./Comment";
 import Footer from "./Footer";

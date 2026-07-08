@@ -39,8 +39,30 @@ function getRelativeTime(oldTimestamp) {
   return relativeTime;
 }
 
+function getCommentData(randomComment) {
+  return {
+    commentId: randomComment.id,
+    author: randomComment.snippet?.topLevelComment?.snippet?.authorDisplayName,
+    authorChannelURL: randomComment.snippet?.topLevelComment?.snippet?.authorChannelUrl,
+    publishedRaw: Date.parse(randomComment.snippet?.topLevelComment?.snippet?.publishedAt) / 1000,
+    commentText: randomComment.snippet?.topLevelComment?.snippet?.textOriginal,
+  };
+}
+
+function getCommentPresentation(commentText) {
+  const normalizedText = commentText.replaceAll(" ", "");
+  const words = commentText.split(" ");
+
+  return {
+    dynamicFontSize: normalizedText.length >= 200 ? "smaller" : normalizedText.length <= 15 ? "larger" : null,
+    center: normalizedText.length <= 15 ? "center" : null,
+    justify: normalizedText.length >= 150 ? "justify" : null,
+    dynamicComment: words.length >= 50 ? words.slice(0, 50).join(" ") + "..." : commentText,
+  };
+}
+
 function truncate(str, n) {
   return str.length > n ? str.substr(0, n - 1) + "..." : str;
 }
 
-export { youtubeParser, getRelativeTime, truncate };
+export { youtubeParser, getRelativeTime, truncate, getCommentData, getCommentPresentation };

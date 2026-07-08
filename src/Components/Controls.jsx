@@ -1,55 +1,29 @@
-import { useRef, useContext, useEffect } from "react";
-import { AppContext } from "./AppContext";
+import useControls from "../hooks/useControls";
 
-export default function Controls({ source }) {
-  const { appState, handlePaste, getRandomComment } = useContext(AppContext);
-  const { videoComments, randomComment, videoId } = appState;
+export default function Controls() {
+  const { inputRef, handlePaste, getRandomComment, cycleThemeMode, videoComments, themeMode } = useControls();
 
-  const inputRef = useRef();
+  const themeIconMap = {
+    auto: "brightness_auto",
+    dark: "dark_mode",
+    light: "light_mode",
+  };
 
-  const commentLoaded = Object.keys(randomComment).length > 0;
-
-  useEffect(() => {
-    // inputRef.current.focus();
-
-    if (videoId) {
-      console.log("appState", appState);
-      inputRef.current.value = "";
-    }
-
-    inputRef.current.value = "";
-  }, [appState]);
-
-  useEffect(() => {
-    function handleSpacebar(event) {
-      if (event.code === "Space") {
-        getRandomComment(videoComments);
-      }
-    }
-
-    if (commentLoaded) {
-      inputRef.current.blur();
-      window.addEventListener("keydown", handleSpacebar);
-    }
-
-    // window.addEventListener("keydown", handleSpacebar);
-
-    return () => window.removeEventListener("keydown", handleSpacebar);
-  }, [commentLoaded]);
+  const themeIcon = themeIconMap[themeMode] || themeIconMap.light;
 
   return (
     <div className="controls">
-      <input
-        type="text"
-        placeholder="Youtube URL"
-        ref={inputRef}
-        onPaste={handlePaste}
-        // style={{ display: !videoId ? "block" : "none" }}
-        // value={videoURL}
-        /* */
-      />
-      <button onClick={() => getRandomComment(videoComments)} disabled={!videoComments.length} type="button">
-        <i className="fa-solid fa-arrows-rotate"></i>
+      <input type="text" placeholder="Youtube URL" ref={inputRef} onPaste={handlePaste} />
+      <button
+        onClick={() => getRandomComment(videoComments)}
+        disabled={!videoComments.length}
+        type="button"
+        className="refresh-button"
+        aria-label="Randomize comment">
+        <span className="material-icons">autorenew</span>
+      </button>
+      <button onClick={cycleThemeMode} type="button" className={`theme-toggle ${themeMode}`} aria-label="Toggle theme mode">
+        <span className="material-icons">{themeIcon}</span>
       </button>
     </div>
   );
