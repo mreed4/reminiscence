@@ -1,7 +1,7 @@
 import useControls from "../hooks/useControls";
 
 export default function Controls() {
-  const { inputRef, handlePaste, getRandomComment, cycleThemeMode, videoComments, themeMode } = useControls();
+  const { inputRef, handlePaste, getRandomComment, cycleThemeMode, videoComments, themeMode, isLoading } = useControls();
 
   const themeIconMap = {
     auto: "brightness_auto",
@@ -13,10 +13,10 @@ export default function Controls() {
 
   return (
     <div className="controls">
-      <input type="text" placeholder="Youtube URL" ref={inputRef} onPaste={handlePaste} />
+      <input type="text" placeholder="Youtube URL" ref={inputRef} onPaste={handlePaste} disabled={isLoading} />
       <button
         onClick={() => getRandomComment(videoComments)}
-        disabled={!videoComments.length}
+        disabled={!videoComments.length || isLoading}
         type="button"
         className="refresh-button"
         aria-label="Randomize comment">

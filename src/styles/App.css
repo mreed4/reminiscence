@@ -16,6 +16,11 @@ main .prompt {
   font-size: 3rem;
 }
 
+main .prompt.loading {
+  opacity: 0.75;
+  font-family: "JetBrains Mono", monospace;
+}
+
 .invalid-url,
 .comments-error {
   font-size: 2rem;

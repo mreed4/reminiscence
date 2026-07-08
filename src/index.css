@@ -1,4 +1,4 @@
-@import "./_base.css";
-@import "./App.css";
-@import "./Comment.css";
-@import "./Footer.css";
+@import "./styles/_base.css";
+@import "./styles/App.css";
+@import "./styles/Comment.css";
+@import "./styles/Footer.css";

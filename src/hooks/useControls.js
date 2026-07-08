@@ -3,7 +3,7 @@ import { AppContext } from "../contexts/AppContext";
 
 export default function useControls() {
   const { appState, handlePaste, getRandomComment, cycleThemeMode } = useContext(AppContext);
-  const { videoComments, randomComment, videoId, themeMode } = appState;
+  const { videoComments, randomComment, videoId, themeMode, isLoading } = appState;
 
   const inputRef = useRef();
   const commentLoaded = Object.keys(randomComment).length > 0;
@@ -36,5 +36,6 @@ export default function useControls() {
     cycleThemeMode,
     videoComments,
     themeMode,
+    isLoading,
   };
 }
