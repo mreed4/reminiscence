@@ -12,12 +12,23 @@
   align-items: center;
   justify-content: flex-start;
   font-family: "Roboto Condensed", sans-serif;
-  color: hsla(0, 0%, 0%, 0.5);
+  /* color: hsla(0, 0%, 0%, 0.85); */
+}
+
+html[data-theme="dark"] .comment .comment-details {
+  /* color: hsla(0, 0%, 100%, 0.85); */
+}
+
+@media (prefers-color-scheme: dark) {
+  html[data-theme="auto"] .comment .comment-details {
+    /* color: hsla(0, 0%, 100%, 0.85); */
+  }
 }
 
 .comment .comment-details .comment-author a {
+  color: inherit;
   text-decoration: underline;
-  text-decoration-color: hsla(0, 0%, 100%, 0.35);
+  text-decoration-color: currentColor;
   text-decoration-thickness: 2px;
   text-underline-offset: 2px;
   transition: text-underline-offset 125ms ease-in-out;
@@ -76,7 +87,7 @@
 
 @media (prefers-color-scheme: dark) {
   .comment .comment-details {
-    color: hsla(0, 100%, 100%, 0.5);
+    /* color: hsla(0, 100%, 100%, 0.5); */
   }
 
   .comment .comment-text::selection {

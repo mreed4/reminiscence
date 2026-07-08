@@ -9,7 +9,10 @@
   --white: gainsboro;
   --bg: var(--white);
   --fg: var(--black);
+  --muted: hsla(0, 0%, 0%, 0.5);
   --red: #d44d5c;
+  --button-bg: rgba(0, 0, 0, 0.04);
+  --button-bg-hover: rgba(0, 0, 0, 0.08);
 
   color-scheme: light dark;
   color: var(--fg);
@@ -26,15 +29,59 @@
     color 125ms ease-in-out;
 }
 
-:root:has(.invalid-url),
-:root:has(.comments-error) {
+body.invalid-url-state,
+body.comments-error-state {
   background-color: var(--red);
   color: var(--white);
 }
 
-:root:has(.invalid-url) footer input[type="text"],
-:root:has(.comments-error) footer input[type="text"] {
+body.invalid-url-state footer input[type="text"],
+body.comments-error-state footer input[type="text"] {
   color: var(--white);
+}
+
+html[data-theme="dark"] {
+  --white: #f8f8ff;
+  --black: #e8e8e8;
+  --bg: #0b1120;
+  --fg: #f8f8ff;
+  --red: #d44d5c;
+  --button-bg: rgba(255, 255, 255, 0.08);
+  --button-bg-hover: rgba(255, 255, 255, 0.15);
+}
+
+html[data-theme="light"] {
+  --white: gainsboro;
+  --black: #14213d;
+  --bg: var(--white);
+  --fg: var(--black);
+  --red: #d44d5c;
+  --button-bg: rgba(0, 0, 0, 0.04);
+  --button-bg-hover: rgba(0, 0, 0, 0.08);
+}
+
+html[data-theme="auto"] {
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  html[data-theme="auto"] {
+    --white: #0b1120;
+    --black: #f8f8ff;
+    --bg: #0b1120;
+    --fg: #f8f8ff;
+    --muted: hsla(0, 0%, 100%, 0.5);
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  html[data-theme="auto"] {
+    --white: gainsboro;
+    --black: #14213d;
+    --bg: var(--white);
+    --fg: var(--black);
+    --muted: hsla(0, 0%, 0%, 0.5);
+  }
 }
 
 * {
@@ -58,44 +105,6 @@ body {
   overflow-x: hidden;
 }
 
-html[data-theme="dark"] {
-  --white: #f8f8ff;
-  --black: #e8e8e8;
-  --bg: #0b1120;
-  --fg: #f8f8ff;
-  --red: #d44d5c;
-}
-
-html[data-theme="light"] {
-  --white: gainsboro;
-  --black: #14213d;
-  --bg: var(--white);
-  --fg: var(--black);
-  --red: #d44d5c;
-}
-
-html[data-theme="auto"] {
-  color-scheme: light dark;
-}
-
-@media (prefers-color-scheme: dark) {
-  html[data-theme="auto"] {
-    --white: #0b1120;
-    --black: #f8f8ff;
-    --bg: #0b1120;
-    --fg: #f8f8ff;
-  }
-}
-
-@media (prefers-color-scheme: light) {
-  html[data-theme="auto"] {
-    --white: gainsboro;
-    --black: #14213d;
-    --bg: var(--white);
-    --fg: var(--black);
-  }
-}
-
 h1 {
   font-weight: 700;
 }
@@ -105,7 +114,76 @@ a {
   text-decoration: none;
 }
 
-/* Mobile responsive styles */
+#root {
+  width: 100%;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  padding: 0 15px;
+  box-sizing: border-box;
+}
+
+main .prompt {
+  font-size: 3rem;
+}
+
+main .prompt.loading {
+  opacity: 0.75;
+  font-family: "JetBrains Mono", monospace;
+}
+
+main .prompt-form {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 800px;
+}
+
+main .prompt-form input,
+main .prompt-form .submit-button {
+  font-family: inherit;
+}
+
+main .prompt-form input {
+  flex: 1;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: inherit;
+  font-size: 3rem;
+  text-align: center;
+  white-space: nowrap;
+}
+
+main .prompt-form input::placeholder {
+  color: currentColor;
+  opacity: 0.6;
+}
+
+main .prompt-form input:focus {
+  outline: none;
+}
+
+main .prompt-form .submit-button {
+  display: none;
+}
+
+.invalid-url,
+.comments-error {
+  font-size: 2rem;
+  font-family: "Roboto Condensed", sans-serif;
+  text-align: center;
+}
+
 @media (max-width: 768px) {
   :root {
     font-size: 14px; /* Slightly smaller base font size for mobile */
@@ -114,10 +192,31 @@ a {
   body {
     overflow-y: auto; /* Allow scrolling on mobile */
   }
+
+  main {
+    height: auto;
+    min-height: 100vh;
+    padding: 60px 15px;
+    justify-content: flex-start;
+  }
+
+  main .prompt {
+    font-size: 2.5rem;
+    text-align: center;
+  }
 }
 
 @media (max-width: 480px) {
   :root {
     font-size: 12px; /* Even smaller base font for very small screens */
+  }
+
+  main .prompt {
+    font-size: 2rem;
+  }
+
+  .invalid-url,
+  .comments-error {
+    font-size: 1.5rem;
   }
 }

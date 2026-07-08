@@ -11,6 +11,7 @@ function AppProvider({ children }) {
     appState: youTubeState,
     selectedComment,
     handlePaste,
+    loadVideoUrl,
     getRandomComment,
     clearInvalidURL,
     clearData,
@@ -22,6 +23,7 @@ function AppProvider({ children }) {
   const value = {
     appState,
     handlePaste,
+    loadVideoUrl,
     getRandomComment,
     clearInvalidURL,
     clearData,

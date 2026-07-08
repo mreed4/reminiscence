@@ -16,12 +16,14 @@ export default function Footer() {
         <i className="fa-brands fa-youtube"></i>
         <span>Reminiscence</span>
       </h1>
-      {videoTitle && !invalidURL ? (
+      {invalidURL ? (
+        <span className="video-title invalid-url">Invalid URL</span>
+      ) : videoTitle ? (
         <a className="video-title" href={videoUrl} target="_blank" rel="noreferrer">
           {truncate(videoTitle, 50)}
         </a>
       ) : (
-        <span className="video-title">{!invalidURL && truncate(videoTitle, 50)}</span>
+        <span className="video-title"></span>
       )}
       <Controls />
     </footer>

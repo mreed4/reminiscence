@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AppContext } from "./contexts/AppContext";
 import useControls from "./hooks/useControls";
 
@@ -11,6 +11,15 @@ function App() {
   const { inputRef, inputValue, handleInputChange, handlePaste, handleSubmit, isLoading } = useControls();
 
   const hasError = status === "error";
+
+  useEffect(() => {
+    document.body.classList.toggle("invalid-url-state", invalidURL);
+    document.body.classList.toggle("comments-error-state", hasError);
+
+    return () => {
+      document.body.classList.remove("invalid-url-state", "comments-error-state");
+    };
+  }, [invalidURL, hasError]);
 
   return (
     <>
@@ -36,7 +45,6 @@ function App() {
           </form>
         )}
         {hasError && <p className="comments-error">{errorMessage || "Comments could not be loaded. Check Netlify Dev or your network."}</p>}
-        {invalidURL && <p className="invalid-url">Invalid URL</p>}
       </main>
       <Footer />
     </>
