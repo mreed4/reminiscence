@@ -1,0 +1,58 @@
+/* Modal overlay and content */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1em;
+  z-index: 20;
+}
+
+.modal-content {
+  position: relative;
+  width: min(100%, 700px);
+  max-height: calc(100vh - 2em);
+  overflow-y: auto;
+  background: var(--white);
+  color: var(--fg);
+  border-radius: 16px;
+  border: 1px solid hsla(0, 0%, 100%, 0.14);
+  box-shadow: 0 28px 60px rgba(0, 0, 0, 0.25);
+  padding: 1.5rem;
+  font-family: "Noto Sans", sans-serif;
+}
+
+.modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  border: none;
+  background: transparent;
+  color: var(--fg);
+  font-size: 1.5rem;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.modal-body {
+  margin-top: 1rem;
+  font-size: 1rem;
+  line-height: 1.75;
+}
+
+.modal-body h2 {
+  margin: 1.5rem 0 0.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #ff0000;
+}
+
+.modal-body p + p {
+  margin-top: 1rem;
+}

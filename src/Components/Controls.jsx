@@ -1,6 +1,6 @@
 import useControls from "../hooks/useControls";
 
-export default function Controls() {
+export default function Controls({ onHelp }) {
   const { getRandomComment, clearData, cycleThemeMode, videoComments, themeMode, isLoading, videoId } = useControls();
 
   const themeIconMap = {
@@ -31,6 +31,9 @@ export default function Controls() {
       </button>
       <button onClick={cycleThemeMode} type="button" className={`theme-toggle ${themeMode}`} aria-label="Toggle theme mode">
         <span className="material-icons">{themeIcon}</span>
+      </button>
+      <button type="button" className="help-button" onClick={onHelp} aria-label="Open help modal">
+        <span className="material-icons">help_outline</span>
       </button>
     </div>
   );
