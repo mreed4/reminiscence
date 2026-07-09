@@ -7,8 +7,8 @@ main {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
-  padding: 0 15px;
+  min-height: calc(100vh - 7rem);
+  padding: 4rem 15px 4rem;
   box-sizing: border-box;
 }
 
@@ -76,7 +76,7 @@ main .prompt-form .submit-button {
   main {
     height: auto;
     min-height: 100vh;
-    padding: 60px 15px;
+    padding: 60px 15px 4rem;
     justify-content: flex-start;
   }
 

@@ -3,6 +3,7 @@ import { AppContext } from "./contexts/AppContext";
 import useControls from "./hooks/useControls";
 
 import Comment from "./components/Comment";
+import Header from "./components/Header";
 import Footer from "./components/Footer";
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
 
   return (
     <>
+      <Header />
       <main>
         {isLoading ? (
           <p className="prompt loading">Loading comments...</p>
