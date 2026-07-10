@@ -6,7 +6,6 @@ header.app-header {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: "Roboto Condensed", sans-serif;
   padding: 1em 1em 0.5em;
   z-index: 10;
 }
@@ -26,7 +25,6 @@ header.app-header {
 }
 
 header.app-header h1 {
-  letter-spacing: -1px;
   display: flex;
   align-items: center;
 }

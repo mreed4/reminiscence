@@ -52,8 +52,6 @@ html[data-theme="dark"] .drawer-header {
 
 .drawer-header h3 {
   margin: 0;
-  font-size: 1.1em;
-  font-weight: 600;
 }
 
 .drawer-close {
@@ -128,9 +126,6 @@ html[data-theme="dark"] .favorite-item {
 
 .favorite-item .video-link {
   color: #ff0000;
-  text-decoration: underline;
-  font-weight: 500;
-  font-size: 0.9em;
 }
 
 .favorite-item .video-link:hover {
@@ -139,8 +134,6 @@ html[data-theme="dark"] .favorite-item {
 
 .favorite-text {
   margin: 0.5rem 0 0;
-  font-size: 0.95em;
-  line-height: 1.4;
   color: var(--fg);
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -153,12 +146,10 @@ html[data-theme="dark"] .favorite-item {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  font-size: 0.85em;
   opacity: 0.7;
 }
 
 .favorite-meta .author {
-  font-weight: 500;
 }
 
 .favorite-meta .date::before {
@@ -193,12 +184,10 @@ html[data-theme="dark"] .favorite-item {
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  font-size: 0.85em;
   opacity: 0.7;
 }
 
 .detail-meta .author {
-  font-weight: 500;
   opacity: 1;
 }
 
@@ -206,7 +195,6 @@ html[data-theme="dark"] .favorite-item {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  font-size: 0.9em;
 }
 
 .detail-dates .posted-date::before {
@@ -220,8 +208,6 @@ html[data-theme="dark"] .favorite-item {
 }
 
 .detail-text {
-  font-size: 1em;
-  line-height: 1.6;
   color: var(--fg);
   margin: 0;
   white-space: pre-wrap;
@@ -247,8 +233,6 @@ html[data-theme="dark"] .drawer-footer {
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 0.9em;
-  font-weight: 500;
   transition: opacity 125ms ease-in-out;
 }
 

@@ -10,14 +10,10 @@ footer {
 }
 
 .footer-disclaimer {
-  font-family: "Roboto Condensed", sans-serif;
-  font-size: 0.825em;
   opacity: 0.55;
   margin: 0;
   width: 100%;
   max-width: 100%;
-  text-align: center;
-  line-height: 1.4;
 }
 
 header.app-header h1 {

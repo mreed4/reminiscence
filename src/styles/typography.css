@@ -1,0 +1,160 @@
+/* Root typography variables */
+:root {
+  line-height: 1.5;
+}
+
+/* Base text */
+body {
+  font-family: inherit;
+}
+
+h1 {
+  font-weight: 700;
+}
+
+/* Header typography */
+header.app-header {
+  font-family: var(--font-mono);
+}
+
+header.app-header h1 {
+  letter-spacing: -1px;
+  font-family: var(--font-sans);
+}
+
+/* Main content typography */
+main .prompt {
+  font-size: 3rem;
+}
+
+main .prompt.loading {
+  font-family: var(--font-mono);
+}
+
+main .prompt-form input {
+  font-size: 3rem;
+  text-align: center;
+  white-space: nowrap;
+}
+
+main .prompt-form input::placeholder {
+  color: currentColor;
+  opacity: 0.6;
+}
+
+.invalid-url,
+.comments-error {
+  font-size: 2rem;
+  font-family: var(--font-mono);
+  text-align: center;
+}
+
+/* Comment typography */
+.comment .comment-text {
+  margin: 10px 0;
+  font-size: 3rem;
+  line-height: 1.25;
+  text-transform: lowercase;
+}
+
+.comment .comment-text.smaller {
+  font-size: 2.25em;
+}
+
+.comment .comment-text.larger {
+  font-size: 5.25em;
+}
+
+.comment .comment-text.justify {
+  text-align: justify;
+}
+
+.comment .comment-details {
+  font-family: var(--font-mono);
+}
+
+.comment .comment-details .comment-author a {
+  text-decoration: underline;
+  text-decoration-color: currentColor;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 2px;
+}
+
+/* Footer typography */
+footer.app-footer {
+  font-family: var(--font-mono);
+}
+
+.footer-disclaimer {
+  font-family: var(--font-mono);
+  font-size: 0.825em;
+  line-height: 1.4;
+  text-align: center;
+}
+
+/* Modal typography */
+.modal-content {
+  font-family: var(--font-mono);
+}
+
+/* Favorites drawer typography */
+.favorites-drawer {
+  font-family: var(--font-mono);
+}
+
+.drawer-header h3 {
+  font-size: 1.1em;
+  font-weight: 600;
+}
+
+.favorite-item .video-link {
+  text-decoration: underline;
+  font-weight: 500;
+  font-size: 0.9em;
+}
+
+.favorite-text {
+  font-size: 0.95em;
+  line-height: 1.4;
+}
+
+.favorite-meta {
+  font-size: 0.85em;
+}
+
+.favorite-meta .author {
+  font-weight: 500;
+}
+
+.detail-header .video-link {
+  display: block;
+}
+
+.detail-header .video-link {
+  font-weight: 500;
+  font-size: 0.9em;
+}
+
+.detail-meta {
+  font-size: 0.85em;
+}
+
+.detail-meta .author {
+  font-weight: 500;
+}
+
+.detail-dates {
+  font-size: 0.9em;
+}
+
+.detail-text {
+  font-size: 1em;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.clear-favorites-btn {
+  font-size: 0.9em;
+  font-weight: 500;
+}
