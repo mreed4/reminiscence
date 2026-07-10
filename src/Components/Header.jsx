@@ -3,11 +3,13 @@ import { AppContext } from "../contexts/AppContext";
 import { truncate } from "../utils/helpers";
 import Controls from "./Controls";
 import Modal from "./Modal";
+import FavoritesPopover from "./FavoritesPopover";
 
 export default function Header() {
-  const { appState } = useContext(AppContext);
+  const { appState, favorites, clearAllFavorites } = useContext(AppContext);
   const { videoId, videoTitle, invalidURL } = appState;
   const [helpOpen, setHelpOpen] = useState(false);
+  const [favoritesOpen, setFavoritesOpen] = useState(false);
 
   const videoUrl = videoId ? `https://www.youtube.com/watch?v=${videoId}` : "";
 
@@ -34,9 +36,21 @@ export default function Header() {
             )}
           </div>
 
-          <Controls onHelp={() => setHelpOpen(true)} />
+          <div className="header-controls">
+            <button
+              type="button"
+              className="favorites-button"
+              onClick={() => setFavoritesOpen(!favoritesOpen)}
+              aria-label={`View favorites (${favorites.length})`}>
+              <span className="material-icons">favorite</span>
+              {favorites.length > 0 && <span className="favorites-badge">{favorites.length}</span>}
+            </button>
+            <Controls onHelp={() => setHelpOpen(true)} />
+          </div>
         </div>
       </header>
+
+      <FavoritesPopover favorites={favorites} open={favoritesOpen} onClose={() => setFavoritesOpen(false)} onClear={clearAllFavorites} />
 
       <Modal open={helpOpen} onClose={() => setHelpOpen(false)} />
     </>

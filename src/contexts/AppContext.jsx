@@ -2,6 +2,7 @@ import { createContext } from "react";
 
 import useThemeMode from "../hooks/useThemeMode";
 import useYouTubeData from "../hooks/useYouTubeData";
+import useFavorites from "../hooks/useFavorites";
 
 const AppContext = createContext();
 
@@ -17,6 +18,7 @@ function AppProvider({ children }) {
     clearData,
     commentLoaded,
   } = useYouTubeData();
+  const { favorites, toggleFavorite, isFavorited, clearAllFavorites } = useFavorites();
 
   const appState = { ...youTubeState, themeMode, selectedComment };
 
@@ -29,6 +31,10 @@ function AppProvider({ children }) {
     clearData,
     cycleThemeMode,
     commentLoaded,
+    favorites,
+    toggleFavorite,
+    isFavorited,
+    clearAllFavorites,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

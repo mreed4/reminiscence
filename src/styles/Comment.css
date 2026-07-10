@@ -46,6 +46,28 @@ html[data-theme="dark"] .comment .comment-details {
   margin: 0 5px;
 }
 
+.comment .comment-details .favorite-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--fg);
+  font-size: 1.5em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25em;
+  margin-right: 0.5em;
+  transition: color 125ms ease-in-out;
+}
+
+.comment .comment-details .favorite-button:hover {
+  color: #ff0000;
+}
+
+.comment .comment-details .favorite-button.active {
+  color: #ff0000;
+}
+
 .comment .comment-text::selection {
   background-color: gold;
 }
