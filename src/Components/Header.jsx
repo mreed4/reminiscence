@@ -3,7 +3,7 @@ import { AppContext } from "../contexts/AppContext";
 import { truncate } from "../utils/helpers";
 import Controls from "./Controls";
 import Modal from "./Modal";
-import FavoritesPopover from "./FavoritesPopover";
+import FavoritesDrawer from "./FavoritesDrawer";
 
 export default function Header() {
   const { appState, favorites, clearAllFavorites } = useContext(AppContext);
@@ -37,20 +37,15 @@ export default function Header() {
           </div>
 
           <div className="header-controls">
-            <button
-              type="button"
-              className="favorites-button"
-              onClick={() => setFavoritesOpen(!favoritesOpen)}
-              aria-label={`View favorites (${favorites.length})`}>
+            <button type="button" className="favorites-button" onClick={() => setFavoritesOpen(!favoritesOpen)} aria-label="View favorites">
               <span className="material-icons">favorite</span>
-              {favorites.length > 0 && <span className="favorites-badge">{favorites.length}</span>}
             </button>
             <Controls onHelp={() => setHelpOpen(true)} />
           </div>
         </div>
       </header>
 
-      <FavoritesPopover favorites={favorites} open={favoritesOpen} onClose={() => setFavoritesOpen(false)} onClear={clearAllFavorites} />
+      <FavoritesDrawer favorites={favorites} open={favoritesOpen} onClose={() => setFavoritesOpen(false)} onClear={clearAllFavorites} />
 
       <Modal open={helpOpen} onClose={() => setHelpOpen(false)} />
     </>

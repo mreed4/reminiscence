@@ -1,33 +1,44 @@
-.popover-backdrop {
+.drawer-backdrop {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: transparent;
+  background: rgba(0, 0, 0, 0.3);
   z-index: 99;
+  opacity: 0;
+  pointer-events: none;
 }
 
-.favorites-popover {
+.drawer-backdrop.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.favorites-drawer {
   position: fixed;
-  top: 4.5em;
-  right: 1em;
-  width: 380px;
-  max-height: 70vh;
+  top: 0;
+  right: 0;
+  width: 400px;
+  height: 100vh;
   background: var(--bg);
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: -4px 0 12px rgba(0, 0, 0, 0.15);
   display: flex;
   flex-direction: column;
   z-index: 100;
+  transform: translateX(100%);
 }
 
-html[data-theme="dark"] .favorites-popover {
+.favorites-drawer.open {
+  transform: translateX(0);
+}
+
+html[data-theme="dark"] .favorites-drawer {
   border-color: rgba(255, 255, 255, 0.1);
 }
 
-.popover-header {
+.drawer-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -35,17 +46,17 @@ html[data-theme="dark"] .favorites-popover {
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
-html[data-theme="dark"] .popover-header {
+html[data-theme="dark"] .drawer-header {
   border-bottom-color: rgba(255, 255, 255, 0.1);
 }
 
-.popover-header h3 {
+.drawer-header h3 {
   margin: 0;
   font-size: 1.1em;
   font-weight: 600;
 }
 
-.popover-close {
+.drawer-close {
   background: none;
   border: none;
   color: var(--fg);
@@ -57,11 +68,27 @@ html[data-theme="dark"] .popover-header {
   padding: 0;
 }
 
-.popover-close:hover {
+.drawer-close:hover {
   opacity: 0.7;
 }
 
-.popover-content {
+.drawer-back {
+  background: none;
+  border: none;
+  color: var(--fg);
+  cursor: pointer;
+  font-size: 1.5em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.drawer-back:hover {
+  opacity: 0.7;
+}
+
+.drawer-content {
   flex: 1;
   overflow-y: auto;
   padding: 0;
@@ -79,6 +106,16 @@ html[data-theme="dark"] .popover-header {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  cursor: pointer;
+  transition: background-color 125ms ease-in-out;
+}
+
+.favorite-item:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+html[data-theme="dark"] .favorite-item:hover {
+  background-color: rgba(255, 255, 255, 0.05);
 }
 
 html[data-theme="dark"] .favorite-item {
@@ -105,6 +142,11 @@ html[data-theme="dark"] .favorite-item {
   font-size: 0.95em;
   line-height: 1.4;
   color: var(--fg);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .favorite-meta {
@@ -132,14 +174,68 @@ html[data-theme="dark"] .favorite-item {
   margin: 0;
 }
 
-.popover-footer {
+.detail-view {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.detail-header {
+  margin-bottom: 1.5rem;
+}
+
+.detail-header .video-link {
+  display: block;
+  margin-bottom: 0.75rem;
+}
+
+.detail-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  font-size: 0.85em;
+  opacity: 0.7;
+}
+
+.detail-meta .author {
+  font-weight: 500;
+  opacity: 1;
+}
+
+.detail-dates {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 0.9em;
+}
+
+.detail-dates .posted-date::before {
+  content: "📤 ";
+  margin-right: 0.25rem;
+}
+
+.detail-dates .added-date::before {
+  content: "❤️ ";
+  margin-right: 0.25rem;
+}
+
+.detail-text {
+  font-size: 1em;
+  line-height: 1.6;
+  color: var(--fg);
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.drawer-footer {
   padding: 1rem;
   border-top: 1px solid rgba(0, 0, 0, 0.05);
   display: flex;
   gap: 0.5rem;
 }
 
-html[data-theme="dark"] .popover-footer {
+html[data-theme="dark"] .drawer-footer {
   border-top-color: rgba(255, 255, 255, 0.1);
 }
 
@@ -160,11 +256,8 @@ html[data-theme="dark"] .popover-footer {
   opacity: 0.9;
 }
 
-@media (max-width: 480px) {
-  .favorites-popover {
-    width: calc(100vw - 2em);
-    right: 1em;
-    left: 1em;
-    max-height: 60vh;
+@media (max-width: 768px) {
+  .favorites-drawer {
+    width: 100vw;
   }
 }
