@@ -1,160 +1,34 @@
 import { useReducer } from "react";
 
 import { youtubeParser } from "../utils/helpers";
+import { normalizeCommentText } from "../utils/commentHelpers";
+import { pickNextCommentIndex } from "../utils/commentSelection";
 import { fetchVideoTitle, fetchVideoComments } from "../services/youtubeService";
-
-const initialYouTubeState = {
-  videoId: "",
-  videoTitle: "",
-  videoComments: [],
-  selectedCommentIndex: null,
-  recentCommentHistory: [],
-  invalidURL: false,
-  errorMessage: "",
-  status: "idle",
-};
-
-function reducer(state, action) {
-  switch (action.type) {
-    case "START_LOADING":
-      return {
-        ...state,
-        videoId: action.payload,
-        invalidURL: false,
-        errorMessage: "",
-        status: "loading",
-        videoComments: [],
-        selectedCommentIndex: null,
-        recentCommentHistory: [],
-      };
-    case "SET_INVALID_URL":
-      return {
-        ...state,
-        invalidURL: true,
-        errorMessage: "",
-        videoId: "",
-        videoTitle: "",
-        videoComments: [],
-        selectedCommentIndex: null,
-        status: "idle",
-      };
-    case "SET_VIDEO_TITLE":
-      return {
-        ...state,
-        videoTitle: action.payload,
-      };
-    case "SET_VIDEO_COMMENTS":
-      return {
-        ...state,
-        videoComments: action.payload,
-      };
-    case "SET_SELECTED_COMMENT_INDEX":
-      return {
-        ...state,
-        selectedCommentIndex: action.payload,
-      };
-    case "SET_SELECTED_COMMENT_INDEX_AND_HISTORY":
-      return {
-        ...state,
-        selectedCommentIndex: action.payload,
-        recentCommentHistory: [...state.recentCommentHistory.filter((index) => index !== action.payload), action.payload].slice(-10),
-      };
-    case "SET_ERROR":
-      return {
-        ...state,
-        status: "error",
-        errorMessage: action.payload,
-        invalidURL: false,
-        videoId: "",
-        videoTitle: "",
-        videoComments: [],
-        selectedCommentIndex: null,
-        recentCommentHistory: [],
-      };
-    case "CLEAR_INVALID_URL":
-      return {
-        ...state,
-        invalidURL: false,
-        errorMessage: "",
-      };
-    case "SET_STATUS":
-      return {
-        ...state,
-        status: action.payload,
-      };
-    case "CLEAR":
-      return {
-        ...initialYouTubeState,
-      };
-    default:
-      return state;
-  }
-}
+import youTubeReducer, { ActionTypes, initialYouTubeState } from "./youTubeReducer";
 
 export default function useYouTubeData() {
-  const [appState, dispatch] = useReducer(reducer, initialYouTubeState);
+  const [appState, dispatch] = useReducer(youTubeReducer, initialYouTubeState);
 
   const selectedComment = appState.selectedCommentIndex !== null ? appState.videoComments[appState.selectedCommentIndex] : {};
 
   const commentLoaded = Object.keys(selectedComment).length > 0;
 
-  const normalizeCommentText = (item) => {
-    const snippet = item.snippet?.topLevelComment?.snippet;
-    if (!snippet) return item;
-
-    const textOriginal = snippet.textOriginal ?? "";
-    const textDisplay = snippet.textDisplay ?? "";
-
-    const normalizedTextOriginal = textOriginal.replace(/\r?\n/g, " ").trim();
-    const normalizedTextDisplay = textDisplay.replace(/<br\s*\/?>/gi, " ").trim();
-
-    return {
-      ...item,
-      snippet: {
-        ...item.snippet,
-        topLevelComment: {
-          ...item.snippet.topLevelComment,
-          snippet: {
-            ...snippet,
-            textOriginal: normalizedTextOriginal,
-            textDisplay: normalizedTextDisplay,
-          },
-        },
-      },
-    };
-  };
-
   const handleFetchError = (message) => {
-    dispatch({ type: "SET_ERROR", payload: message });
+    dispatch({ type: ActionTypes.SET_ERROR, payload: message });
   };
 
   const getRandomComment = (comments) => {
     if (!Array.isArray(comments) || !comments.length) {
-      dispatch({ type: "SET_SELECTED_COMMENT_INDEX", payload: null });
+      dispatch({ type: ActionTypes.SET_SELECTED_COMMENT_INDEX, payload: null });
       return;
     }
 
-    if (comments.length === 1) {
-      dispatch({ type: "SET_SELECTED_COMMENT_INDEX_AND_HISTORY", payload: 0 });
-      return;
-    }
+    const chosenIndex = pickNextCommentIndex(comments.length, appState.recentCommentHistory, appState.selectedCommentIndex);
 
-    const recentHistory = appState.recentCommentHistory ?? [];
-    const excluded = new Set(recentHistory);
-    if (appState.selectedCommentIndex !== null) {
-      excluded.add(appState.selectedCommentIndex);
-    }
-
-    const availableIndexes = comments.map((_, index) => index).filter((index) => !excluded.has(index));
-
-    const chosenIndex =
-      availableIndexes.length > 0
-        ? availableIndexes[Math.floor(Math.random() * availableIndexes.length)]
-        : comments.map((_, index) => index).filter((index) => index !== appState.selectedCommentIndex)[
-            Math.floor(Math.random() * Math.max(1, comments.length - (appState.selectedCommentIndex !== null ? 1 : 0)))
-          ];
-
-    dispatch({ type: "SET_SELECTED_COMMENT_INDEX_AND_HISTORY", payload: chosenIndex });
+    dispatch({
+      type: ActionTypes.SET_SELECTED_COMMENT_INDEX_AND_HISTORY,
+      payload: chosenIndex,
+    });
   };
 
   const getVideoTitle = async (videoId) => {
@@ -162,7 +36,7 @@ export default function useYouTubeData() {
       const { data: titleData } = await fetchVideoTitle(videoId);
       const videoTitle = titleData?.items?.[0]?.snippet?.title ?? "";
 
-      dispatch({ type: "SET_VIDEO_TITLE", payload: videoTitle });
+      dispatch({ type: ActionTypes.SET_VIDEO_TITLE, payload: videoTitle });
     } catch (error) {
       handleFetchError(error.name === "AbortError" ? "Request timed out. Check Netlify Dev." : "Video title fetch failed.");
     }
@@ -179,8 +53,8 @@ export default function useYouTubeData() {
 
       const videoComments = commentsData.items.map((item) => normalizeCommentText(item));
 
-      dispatch({ type: "SET_VIDEO_COMMENTS", payload: videoComments });
-      dispatch({ type: "SET_STATUS", payload: "success" });
+      dispatch({ type: ActionTypes.SET_VIDEO_COMMENTS, payload: videoComments });
+      dispatch({ type: ActionTypes.SET_STATUS, payload: "success" });
       getRandomComment(videoComments);
     } catch (error) {
       handleFetchError(error.name === "AbortError" ? "Netlify request timed out." : "Comments fetch failed.");
@@ -191,12 +65,11 @@ export default function useYouTubeData() {
     const videoId = youtubeParser(videoURL);
 
     if (!videoId) {
-      dispatch({ type: "SET_INVALID_URL" });
+      dispatch({ type: ActionTypes.SET_INVALID_URL });
       return;
     }
 
-    dispatch({ type: "START_LOADING", payload: videoId });
-
+    dispatch({ type: ActionTypes.START_LOADING, payload: videoId });
     getVideoTitle(videoId);
     getVideoComments(videoId);
   };
@@ -207,11 +80,11 @@ export default function useYouTubeData() {
   };
 
   const clearInvalidURL = () => {
-    dispatch({ type: "CLEAR_INVALID_URL" });
+    dispatch({ type: ActionTypes.CLEAR_INVALID_URL });
   };
 
   const clearData = () => {
-    dispatch({ type: "CLEAR" });
+    dispatch({ type: ActionTypes.CLEAR });
   };
 
   return {
