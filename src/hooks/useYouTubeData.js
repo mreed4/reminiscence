@@ -8,6 +8,7 @@ const initialYouTubeState = {
   videoTitle: "",
   videoComments: [],
   selectedCommentIndex: null,
+  recentCommentHistory: [],
   invalidURL: false,
   errorMessage: "",
   status: "idle",
@@ -24,6 +25,7 @@ function reducer(state, action) {
         status: "loading",
         videoComments: [],
         selectedCommentIndex: null,
+        recentCommentHistory: [],
       };
     case "SET_INVALID_URL":
       return {
@@ -51,6 +53,12 @@ function reducer(state, action) {
         ...state,
         selectedCommentIndex: action.payload,
       };
+    case "SET_SELECTED_COMMENT_INDEX_AND_HISTORY":
+      return {
+        ...state,
+        selectedCommentIndex: action.payload,
+        recentCommentHistory: [...state.recentCommentHistory.filter((index) => index !== action.payload), action.payload].slice(-10),
+      };
     case "SET_ERROR":
       return {
         ...state,
@@ -61,6 +69,7 @@ function reducer(state, action) {
         videoTitle: "",
         videoComments: [],
         selectedCommentIndex: null,
+        recentCommentHistory: [],
       };
     case "CLEAR_INVALID_URL":
       return {
@@ -89,6 +98,32 @@ export default function useYouTubeData() {
 
   const commentLoaded = Object.keys(selectedComment).length > 0;
 
+  const normalizeCommentText = (item) => {
+    const snippet = item.snippet?.topLevelComment?.snippet;
+    if (!snippet) return item;
+
+    const textOriginal = snippet.textOriginal ?? "";
+    const textDisplay = snippet.textDisplay ?? "";
+
+    const normalizedTextOriginal = textOriginal.replace(/\r?\n/g, " ").trim();
+    const normalizedTextDisplay = textDisplay.replace(/<br\s*\/?>/gi, " ").trim();
+
+    return {
+      ...item,
+      snippet: {
+        ...item.snippet,
+        topLevelComment: {
+          ...item.snippet.topLevelComment,
+          snippet: {
+            ...snippet,
+            textOriginal: normalizedTextOriginal,
+            textDisplay: normalizedTextDisplay,
+          },
+        },
+      },
+    };
+  };
+
   const handleFetchError = (message) => {
     dispatch({ type: "SET_ERROR", payload: message });
   };
@@ -99,8 +134,27 @@ export default function useYouTubeData() {
       return;
     }
 
-    const rand = Math.floor(Math.random() * comments.length);
-    dispatch({ type: "SET_SELECTED_COMMENT_INDEX", payload: rand });
+    if (comments.length === 1) {
+      dispatch({ type: "SET_SELECTED_COMMENT_INDEX_AND_HISTORY", payload: 0 });
+      return;
+    }
+
+    const recentHistory = appState.recentCommentHistory ?? [];
+    const excluded = new Set(recentHistory);
+    if (appState.selectedCommentIndex !== null) {
+      excluded.add(appState.selectedCommentIndex);
+    }
+
+    const availableIndexes = comments.map((_, index) => index).filter((index) => !excluded.has(index));
+
+    const chosenIndex =
+      availableIndexes.length > 0
+        ? availableIndexes[Math.floor(Math.random() * availableIndexes.length)]
+        : comments.map((_, index) => index).filter((index) => index !== appState.selectedCommentIndex)[
+            Math.floor(Math.random() * Math.max(1, comments.length - (appState.selectedCommentIndex !== null ? 1 : 0)))
+          ];
+
+    dispatch({ type: "SET_SELECTED_COMMENT_INDEX_AND_HISTORY", payload: chosenIndex });
   };
 
   const getVideoTitle = async (videoId) => {
@@ -123,12 +177,7 @@ export default function useYouTubeData() {
         return;
       }
 
-      const videoComments = commentsData.items.filter((item) => {
-        const text = item.snippet?.topLevelComment?.snippet?.textDisplay ?? "";
-        const lineBreak = text.includes("<br />") || text.includes("<br>");
-
-        return !lineBreak;
-      });
+      const videoComments = commentsData.items.map((item) => normalizeCommentText(item));
 
       dispatch({ type: "SET_VIDEO_COMMENTS", payload: videoComments });
       dispatch({ type: "SET_STATUS", payload: "success" });
