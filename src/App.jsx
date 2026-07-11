@@ -2,9 +2,9 @@ import { useContext, useEffect } from "react";
 import { AppContext } from "./contexts/AppContext";
 import useControls from "./hooks/useControls";
 
-import Comment from "./components/Comment";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
+import Comment from "./Components/Comment";
+import Header from "./Components/Header";
+import Footer from "./Components/Footer";
 
 function App() {
   const { appState, commentLoaded } = useContext(AppContext);
