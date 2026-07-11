@@ -1,6 +1,9 @@
+import { useContext } from "react";
+import { AppContext } from "../contexts/AppContext";
 import useControls from "../hooks/useControls";
 
 export default function Controls({ onHelp }) {
+  const { toggleFavoritesOpen } = useContext(AppContext);
   const { getRandomComment, clearData, cycleThemeMode, videoComments, themeMode, isLoading, videoId } = useControls();
 
   const themeIconMap = {
@@ -34,6 +37,9 @@ export default function Controls({ onHelp }) {
       </button>
       <button type="button" className="help-button" onClick={onHelp} aria-label="Open help modal">
         <span className="material-icons">help_outline</span>
+      </button>
+      <button type="button" className="favorites-button" onClick={toggleFavoritesOpen} aria-label="View favorites">
+        <span className="material-icons">favorite</span>
       </button>
     </div>
   );

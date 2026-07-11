@@ -6,10 +6,9 @@ import Modal from "./Modal";
 import FavoritesDrawer from "./FavoritesDrawer";
 
 export default function Header() {
-  const { appState, favorites, clearAllFavorites } = useContext(AppContext);
+  const { appState, favorites, clearAllFavorites, favoritesOpen, toggleFavoritesOpen } = useContext(AppContext);
   const { videoId, videoTitle, invalidURL } = appState;
   const [helpOpen, setHelpOpen] = useState(false);
-  const [favoritesOpen, setFavoritesOpen] = useState(false);
 
   const videoUrl = videoId ? `https://www.youtube.com/watch?v=${videoId}` : "";
 
@@ -37,15 +36,12 @@ export default function Header() {
           </div>
 
           <div className="header-controls">
-            <button type="button" className="favorites-button" onClick={() => setFavoritesOpen(!favoritesOpen)} aria-label="View favorites">
-              <span className="material-icons">favorite</span>
-            </button>
             <Controls onHelp={() => setHelpOpen(true)} />
           </div>
         </div>
       </header>
 
-      <FavoritesDrawer favorites={favorites} open={favoritesOpen} onClose={() => setFavoritesOpen(false)} onClear={clearAllFavorites} />
+      <FavoritesDrawer favorites={favorites} open={favoritesOpen} onClose={toggleFavoritesOpen} onClear={clearAllFavorites} />
 
       <Modal open={helpOpen} onClose={() => setHelpOpen(false)} />
     </>
